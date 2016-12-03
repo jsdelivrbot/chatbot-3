@@ -10,11 +10,13 @@ $(function()
 	{
 		if (event.which == 13) 
 		{
-			event.preventDefault();
-			var text = $("#input").val();
-			setResponse("me123 ( " + Date() + " ) " + text);
-			send(text);
+			send_msg(event);
 		}
+	});
+	
+	$("#submitmsg").click(function(event) 
+	{
+		send_msg(event);
 	});
 	
 	$("#rec").click(function(event) 
@@ -23,6 +25,15 @@ $(function()
 	});
 });
 
+function send_msg(event)
+{
+	event.preventDefault();
+	var text = $("#input").val();
+	var my_msg = "me123 ( " + Date() + " ) " + text;
+	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
+	setResponse(styled_my_msg);
+	send(text);
+}
 
 function startRecognition() 
 {
@@ -118,7 +129,9 @@ function send(text)
 						  				  {
 						        			  if ( k2 == "speech")
 						        			  {
-						        				  setResponse("bot123 ( " + Date() + " ) " + v2);  
+						        				  var bot_msg = "bot123 ( " + Date() + " ) " + v2;
+						        				  var styled_bot_msg = "<div class='msgBot'>" + bot_msg + "</div>";
+						        				  setResponse(styled_bot_msg);  
 						        			  }
 						  				  });
 						  			  });
@@ -139,5 +152,5 @@ function send(text)
 
 function setResponse(val) 
 {
-	$('#chatbox').append($('<li>').text(val));
+	$('#chatbox').append($('<li>').html( val ));
 }
