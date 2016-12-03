@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Smart Chat</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+	<script src="scripts/prechat.js"></script>
+</head>
+<body>
+	<img style="display: block;" src="images/header.png" alt="" />
+	<form>
+	  <fieldset>
+	    <legend>CHAT</legend>
+	    Work group To Chat: 
+	   <select multiple style="display: block;">
+	   		<option value="uvdc">Uvdc_sf</option>
+		  <option value="waim">Waim</option>
+		  <option value="wcmc">Wcmc</option>
+		  <option value="cab">Cab</option>
+		  <option value="schd">Smart_Chat_helpdesk</option>
+		</select>
+	    Query:
+	    <select multiple style="display: block;">
+	   		<option value="uvdc">Feedback</option>
+		  <option value="waim">Suggestions</option>
+		  <option value="wcmc">Support</option>
+		</select>
+	    Ticket Number: <br/>
+	    <input type="text"><br/>
+	     Agent: <br/>
+	     <input type="text" id="input"><br/>
+	      Test:<br/>
+	       <input type="text"><br/>
+	       BAN: <br/>
+	       <input type="text"><br/>
+	        TN:<br/>
+	         <input type="text"><br/>
+	        <button type="submit" value="Submit" id="chat">Chat</button>
+  			<button type="reset" value="Reset">Reset</button>
+	  </fieldset>
+	</form>
+	<img style="display: block;" src="images/footer.png" alt="" />
+</body>
+</html>
