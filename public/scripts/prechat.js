@@ -1,4 +1,4 @@
-var accessToken = "daca3cc0d46b4b9fa8e99d9f7cf24725";
+var accessToken = "31a9215698df4fe686a11cfa30a84137 ";
 var baseUrl = "https://api.api.ai/v1/";
 var recognition;
 

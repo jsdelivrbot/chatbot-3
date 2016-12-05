@@ -1,4 +1,4 @@
-var accessToken = "daca3cc0d46b4b9fa8e99d9f7cf24725";
+var accessToken = "31a9215698df4fe686a11cfa30a84137 ";
 var baseUrl = "https://api.api.ai/v1/";
 var recognition;
 
@@ -32,6 +32,7 @@ function send_msg(event)
 	var my_msg = "me123 ( " + Date() + " ) " + text;
 	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
 	setResponse(styled_my_msg);
+	$('#input').val('');
 	send(text);
 }
 
@@ -153,4 +154,6 @@ function send(text)
 function setResponse(val) 
 {
 	$('#chatbox').append($('<li>').html( val ));
+	var objDiv = document.getElementById("chatbox");
+	objDiv.scrollTop = objDiv.scrollHeight;
 }
