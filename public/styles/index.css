@@ -1,5 +1,9 @@
-body { width: 500px; margin: 0 auto; text-align: center; margin-top: 20px; }
-div {  position: absolute; }
-input { width: 400px; }
+input { width: 400px; margin-bottom: 0px; width:100%; box-sizing:border-box;}
 button { width: 50px; }
 textarea { width: 100%; }
+div {  position: absolute; }
+select{width:100%;box-sizing:border-box;}
+label {margin-bottom: 0px; color: orange; font-weight: bold;}
+legend {background-color: orange; color: white; font-weight: bold;}
+body { width: 200px; text-align: left; margin-top: 20px; }
+.required:after { content:" *"; }
