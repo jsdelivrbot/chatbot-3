@@ -33,8 +33,13 @@
 		</select>
 		<label  for="workgroup" class="required">Tech CBR:</label><br/>
 	    <input id="tcbr" type="text" name="tcbr"  required><br/>
-	    <label for="workgroup" class="required">Agent ID:</label><br/>
-	    <input id="tan" type="text" name="tan"  required><br/>
+	    <label for="workgroup" class="required">Technician ID:</label><br/>
+	    <select id="tan" multiple style="display: block;">
+		  <option value="volvo">rg123q</option>
+		  <option value="saab">vs098t</option>
+		  <option value="mercedes">dd567p</option>
+		  <option value="audi">vc345w</option>
+		</select>
 		<label for="workgroup" class="required">Level 1:</label><br/>
 	    <select id="l1" multiple style="display: block;">
 	   		<option value="uvdc">Order Errors</option>
@@ -60,7 +65,6 @@
 	<div id="chat" class="welcome_screen">
 	    <div id="menu">
 	        <p class="welcome">Welcome to AT&T Smart Chat</p>
-	        <input name="speak" type="submit"  id="speak" value="Speak" />
 	        <input name="done" type="submit"  id="done" value="Done" />
 	        <div style="clear:both"></div>
 	    </div>

@@ -28,7 +28,7 @@ $(function()
 	$("#chat_btn").click(function(event) 
 	{
 		var workgroup= $( "#wgtc option:selected" ).text();
-		agent_id = $( "#tan" ).val();
+		agent_id = $( "#tan option:selected" ).text();
 		
 		var ban = $( "#ban" ).val();
 		
@@ -45,8 +45,8 @@ $(function()
 		var text2 = $( "#dt option:selected" ).text();
 		var text4 = $( "#l1 option:selected" ).text()  + " " + $( "#tt option:selected" ).text() + " ";
 		var text5 =  $( "#td" ).val();
-		var text = ban + sep + customer + sep + agent_id + sep + cbr;
-		
+		var text = agent_id + sep + ban + sep + customer + sep + cbr;
+		console.log(text)
 		$("#prechat").fadeOut();
 		$("#chat").fadeIn();
 		send_msg(event, text);
