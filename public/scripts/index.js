@@ -1,4 +1,4 @@
-var accessToken = "0eb2a34046304c8583f10ae15abf98b3";
+var accessToken = "31a9215698df4fe686a11cfa30a84137";
 var baseUrl = "https://api.api.ai/v1/";
 var recognition;
 var agent_id;
@@ -41,11 +41,11 @@ $(function()
 		validate(customer, "#cn", "please enter customer");
 		validate(ban, "#ban", "please enter ban");
 		*/
-		var sep = ", ";
+		var sep = " ";
 		var text2 = $( "#dt option:selected" ).text();
 		var text4 = $( "#l1 option:selected" ).text()  + " " + $( "#tt option:selected" ).text() + " ";
 		var text5 =  $( "#td" ).val();
-		var text = agent_id + sep + ban + sep + customer + sep + cbr;
+		var text = ban + sep + customer + sep + agent_id + sep + cbr;
 		
 		$("#prechat").fadeOut();
 		$("#chat").fadeIn();
