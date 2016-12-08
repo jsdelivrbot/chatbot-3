@@ -4,95 +4,76 @@ var recognition;
 
 $(function()
 {
-	send("Hi");
-	
 	$("#input").keypress(function(event) 
 	{
 		if (event.which == 13) 
 		{
-			send_msg(event);
+			send_chat_msg(event);
 		}
 	});
 	
 	$("#submitmsg").click(function(event) 
 	{
-		send_msg(event);
+		send_chat_msg(event);
 	});
-	
-	$("#rec").click(function(event) 
+			
+	$("#chat").fadeOut();
+	$("#done").click(function(event) 
 	{
-		switchRecognition();
+		event.preventDefault();
+		$("#prechat").fadeIn();
+		$("#chat").fadeOut();
+	});
+	$("#chat_btn").click(function(event) 
+	{
+		var workgroup= $( "#wgtc option:selected" ).text();
+		var agent = $( "#tan" ).val();
+		
+		var ban = $( "#ban" ).val();
+		
+		var customer = $( "#cn" ).val();
+		
+		var cbr = $( "#tcbr" ).val();
+		/*
+		validate(customer, "#cbr", "please enter cbr");
+		validate(agent, "#tan", "please enter agent name");
+		validate(customer, "#cn", "please enter customer");
+		validate(ban, "#ban", "please enter ban");
+		*/
+		var sep = " ";
+		var text2 = $( "#dt option:selected" ).text();
+		var text4 = $( "#l1 option:selected" ).text()  + " " + $( "#tt option:selected" ).text() + " ";
+		var text5 =  $( "#td" ).val();
+		var text = "Hi " + workgroup + sep + agent + sep + ban + sep + customer + sep + cbr;
+		$("#prechat").fadeOut();
+		$("#chat").fadeIn();
+		send_msg(event, text);
 	});
 });
 
-function send_msg(event)
+function send_chat_msg(event)
 {
-	event.preventDefault();
 	var text = $("#input").val();
 	var my_msg = "me123 ( " + Date() + " ) " + text;
 	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
 	setResponse(styled_my_msg);
 	$('#input').val('');
+	send_msg(event, text);
+}
+
+function send_msg(event, text)
+{
+	event.preventDefault();
 	send(text);
 }
 
-function startRecognition() 
+function validate (txt, tag, msg)
 {
-	recognition = new webkitSpeechRecognition();
-	recognition.onstart = function(event) 
+	if (txt.length == 0)
 	{
-		updateRec();
-	};
-	
-	recognition.onresult = function(event) 
-	{
-		var text = "";
-	    for (var i = event.resultIndex; i < event.results.length; ++i) 
-	    {
-	    	text += event.results[i][0].transcript;
-	    }
-	    setInput(text);
-		stopRecognition();
-	};
-	
-	recognition.onend = function() 
-	{
-		stopRecognition();
-	};
-	recognition.lang = "en-US";
-	recognition.start();
-}
-
-function stopRecognition() {
-	if (recognition) {
-		recognition.stop();
-		recognition = null;
+		alert(msg);
+		$(tag).parent().after("<div class='validation' style='color:red;margin-bottom: 20px;'>Please enter email address</div>");
 	}
-	updateRec();
-}
-
-function switchRecognition() 
-{
-	if (recognition) 
-	{
-		stopRecognition();
-	}
-	else 
-	{
-		startRecognition();
-	}
-}
-
-function setInput(text) 
-{
-	$("#input").val(text);
-	var txt = $("#input").val();
-	send(txt);
-}
-
-function updateRec() 
-{
-	$("#rec").text(recognition ? "Stop" : "Speak");
 }
 
 function send(text) 
@@ -132,7 +113,7 @@ function send(text)
 						        			  {
 						        				  var bot_msg = "bot123 ( " + Date() + " ) " + v2;
 						        				  var styled_bot_msg = "<div class='msgBot'>" + bot_msg + "</div>";
-						        				  setResponse(styled_bot_msg);  
+						        				  setResponse(styled_bot_msg); 
 						        			  }
 						  				  });
 						  			  });
