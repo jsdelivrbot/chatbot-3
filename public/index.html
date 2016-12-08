@@ -25,16 +25,16 @@
 		<label for="workgroup" class="required">BAN:</label><br/> 
 		<input type="text" id="ban" name="ban"  required><br/>
 	    <label  for="workgroup" class="required">Customer Name:</label><br/>
-	    <input id="cn" type="text"><br/>
+	    <input id="cn" type="text" name="cn"  required><br/>
 	    <label for="workgroup" class="required">Dispatch Type:</label><br/>
 	    <select id="dt" multiple style="display: block;">
 	   		<option value="uvdc">Install</option>
 		  	<option value="waim">Repair</option>
 		</select>
 		<label  for="workgroup" class="required">Tech CBR:</label><br/>
-	    <input id="tcbr" type="text"><br/>
+	    <input id="tcbr" type="text" name="tcbr"  required><br/>
 	    <label for="workgroup" class="required">Agent ID:</label><br/>
-	    <input id="tan" type="text"><br/>
+	    <input id="tan" type="text" name="tan"  required><br/>
 		<label for="workgroup" class="required">Level 1:</label><br/>
 	    <select id="l1" multiple style="display: block;">
 	   		<option value="uvdc">Order Errors</option>
@@ -51,7 +51,7 @@
 		   <option value="wcmc">IPDSL</option>
 		</select>
 	    <label for="workgroup" class="required">Trouble Description:</label><br/>
-	    <textarea id="td" rows="4" cols="50"></textarea><br/>
+	    <textarea id="td" rows="4" cols="50" name="td"  required></textarea><br/>
 	        <button type="submit" value="Submit" id="chat_btn">Chat</button>
   			<button type="reset" value="Reset">Reset</button>
 	  </fieldset>

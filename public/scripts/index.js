@@ -1,6 +1,7 @@
 var accessToken = "0eb2a34046304c8583f10ae15abf98b3";
 var baseUrl = "https://api.api.ai/v1/";
 var recognition;
+var agent_id;
 
 $(function()
 {
@@ -27,7 +28,7 @@ $(function()
 	$("#chat_btn").click(function(event) 
 	{
 		var workgroup= $( "#wgtc option:selected" ).text();
-		var agent = $( "#tan" ).val();
+		agent_id = $( "#tan" ).val();
 		
 		var ban = $( "#ban" ).val();
 		
@@ -40,11 +41,12 @@ $(function()
 		validate(customer, "#cn", "please enter customer");
 		validate(ban, "#ban", "please enter ban");
 		*/
-		var sep = " ";
+		var sep = ", ";
 		var text2 = $( "#dt option:selected" ).text();
 		var text4 = $( "#l1 option:selected" ).text()  + " " + $( "#tt option:selected" ).text() + " ";
 		var text5 =  $( "#td" ).val();
-		var text = "Hi " + workgroup + sep + agent + sep + ban + sep + customer + sep + cbr;
+		var text = agent_id + sep + ban + sep + customer + sep + cbr;
+		
 		$("#prechat").fadeOut();
 		$("#chat").fadeIn();
 		send_msg(event, text);
@@ -54,7 +56,7 @@ $(function()
 function send_chat_msg(event)
 {
 	var text = $("#input").val();
-	var my_msg = "me123 ( " + Date() + " ) " + text;
+	var my_msg =  agent_id + " ( " + Date() + " ) " + text;
 	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
 	setResponse(styled_my_msg);
 	$('#input').val('');
@@ -65,15 +67,6 @@ function send_msg(event, text)
 {
 	event.preventDefault();
 	send(text);
-}
-
-function validate (txt, tag, msg)
-{
-	if (txt.length == 0)
-	{
-		alert(msg);
-		$(tag).parent().after("<div class='validation' style='color:red;margin-bottom: 20px;'>Please enter email address</div>");
-	}
 }
 
 function send(text) 
