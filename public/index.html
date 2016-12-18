@@ -10,58 +10,44 @@
 	<div id="header" class="welcome_screen">
 		<img style="display: block;" src="images/header.png" alt="" />
 	</div>
+	
 	<div id="prechat" class="welcome_screen">
 	<form>
 	  <fieldset>
 	    <legend>CHAT</legend>
-	    <label for="workgroup">Work group To Chat:</label>
+	   
+	    <label for="workgroup">ACD Category</label>
 	   <select  id="wgtc" multiple style="display: block;">
-	   	  <option value="uvdc" selected>TCC IP Field Services</option>
-		  <option value="waim">Tsc</option>
-		  <option value="wcmc">Tsc Installation Services Support</option>
-		  <option value="cab">Network Spoc</option>
-		  <option value="schd">ATT JRT TLD</option>
+	   	  <option value="lg" selected>Light Gig</option>
+		  <option value="co">Report Cable Outage</option>
 		</select>
+		
 		<label for="workgroup" class="required">BAN:</label><br/> 
 		<input type="text" id="ban" name="ban"  required><br/>
-	    <label  for="workgroup" class="required">Customer Name:</label><br/>
-	    <input id="cn" type="text" name="cn"  required><br/>
-	    <label for="workgroup" class="required">Dispatch Type:</label><br/>
-	    <select id="dt" multiple style="display: block;">
-	   		<option value="uvdc" selected>Install</option>
-		  	<option value="waim">Repair</option>
-		</select>
-		<label  for="workgroup" class="required">Tech CBR:</label><br/>
+		
+		<label  for="workgroup" class="required">CBR:</label><br/>
 	    <input id="tcbr" type="text" name="tcbr"  required><br/>
-	    <label for="workgroup" class="required">Technician ID:</label><br/>
+	 
+		<label for="workgroup" class="required">Level 1:</label><br/>
+	    <select id="l1" multiple style="display: block;">
+	    	
+		</select>
+		
+		 <label for="workgroup" class="required">Technician ID:</label><br/>
 	    <select id="tan" multiple style="display: block;">
 		  <option value="volvo" selected>rg123q</option>
 		  <option value="saab">vs098t</option>
 		  <option value="mercedes">dd567p</option>
 		  <option value="audi">vc345w</option>
 		</select>
-		<label for="workgroup" class="required">Level 1:</label><br/>
-	    <select id="l1" multiple style="display: block;">
-	    	<option value="wcmc" selected>Package/Profile Change</option>
-	   		<option value="uvdc">Order Errors</option>
-		  <option value="waim">Other</option>
-		   <option value="wcmc">RG/STB Support</option>
-		    <option value="wcmc">Syncno Service</option>
-		</select>
-		 <label for="workgroup">Transport Type:</label><br/>
-	    <select id="tt" multiple style="display: block;">
-	   		<option value="uvdc" selected>FTTC</option>
-		  <option value="waim">FTTN</option>
-		  <option value="wcmc">FTTP</option>
-		   <option value="wcmc">IPDSL</option>
-		</select>
-	    <label for="workgroup" class="required">Trouble Description:</label><br/>
-	    <textarea id="td" rows="4" cols="50" name="td"  required></textarea><br/>
-	        <button type="submit" value="Submit" id="chat_btn">Chat</button>
-  			<button type="reset" value="Reset">Reset</button>
+
+        <button type="submit" value="Submit" id="chat_btn">Chat</button>
+ 		<button type="reset" value="Reset">Reset</button>
+ 		<button type="reset" value="Reset">Search</button>
 	  </fieldset>
 	</form>
 	</div>
+	
 	<div id="chat" class="welcome_screen">
 	    <div id="menu">
 	        <p class="welcome">Welcome to AT&T Smart Chat</p>

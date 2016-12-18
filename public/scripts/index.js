@@ -5,6 +5,15 @@ var agent_id;
 
 $(function()
 {
+	var conceptName = $('#wgtc').find(":selected").val();
+	toggleDropDown(conceptName);
+	$("#wgtc").change(function () 
+	{
+        var val = $(this).val();
+        toggleDropDown(val);
+      
+    });
+	
 	$("#input").keypress(function(event) 
 	{
 		if (event.which == 13) 
@@ -27,31 +36,56 @@ $(function()
 	});
 	$("#chat_btn").click(function(event) 
 	{
-		var workgroup= $( "#wgtc option:selected" ).text();
-		agent_id = $( "#tan option:selected" ).text();
-		
-		var ban = $( "#ban" ).val();
-		
-		var customer = $( "#cn" ).val();
-		
-		var cbr = $( "#tcbr" ).val();
-		/*
-		validate(customer, "#cbr", "please enter cbr");
-		validate(agent, "#tan", "please enter agent name");
-		validate(customer, "#cn", "please enter customer");
-		validate(ban, "#ban", "please enter ban");
-		*/
 		var sep = " ";
-		var text2 = $( "#dt option:selected" ).text();
-		var text4 = $( "#l1 option:selected" ).text()  + " " + $( "#tt option:selected" ).text() + " ";
-		var text5 =  $( "#td" ).val();
-		var text = agent_id + sep + ban + sep + customer + sep + cbr;
-		console.log(text)
-		$("#prechat").fadeOut();
-		$("#chat").fadeIn();
-		send_msg(event, text);
+		var acd = $( "#wgtc option:selected" ).text();
+		agent_id = $( "#tan option:selected" ).text();
+		var ban = $( "#ban" ).val();
+		var cbr = $( "#tcbr" ).val();
+		var text4 = $( "#l1 option:selected" ).text();
+		
+		var text = agent_id + sep + ban + sep + cbr;
+
+		if(ban.length>8 && $.isNumeric( ban) )
+		{
+			if(cbr.length>0 && $.isNumeric( cbr))
+			{
+				if (text4.length > 0)
+			    {
+			    	$("#prechat").fadeOut();
+					$("#chat").fadeIn();
+					send_msg(event, text);
+			    }
+			     else
+			    {
+			    	 alert("Please select a Level 1");
+			    	 return false;
+			    }
+			}
+			else
+			{
+				alert("Please enter a Numeric CBR");
+				return false;
+			}
+		}
+		else
+		{
+			alert("Please enter a BAN between 9-12 digits");
+			return false;
+		}
 	});
 });
+
+function toggleDropDown(val)
+{
+	  if (val == "lg") 
+      {
+          $("#l1").html("<option value='pc'>Sync No Service</option><option value='ppc'>Package/Profile Change</option>");
+      } 
+      else if (val == "co") 
+      {
+          $("#l1").html("<option value='cf'>Cable Failure</option>");
+      } 
+}
 
 function send_chat_msg(event)
 {
