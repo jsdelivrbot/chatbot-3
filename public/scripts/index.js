@@ -87,6 +87,12 @@ function toggleDropDown(val)
       } 
 }
 
+function clearFields()
+{
+	$('#ban').val('');
+	$('#tcbr').val('');
+}
+
 function send_chat_msg(event)
 {
 	var text = $("#input").val();
