@@ -22,28 +22,49 @@
 		  <option value="co">Report Cable Outage</option>
 		</select>
 		
-		<label for="workgroup" class="required">BAN:</label><br/> 
-		<input type="text" id="ban" name="ban"  required><br/>
-		
-		<label  for="workgroup" class="required">CBR:</label><br/>
-	    <input id="tcbr" type="text" name="tcbr"  required><br/>
-	 
-		<label for="workgroup" class="required">Level 1:</label><br/>
-	    <select id="l1" multiple style="display: block;">
-	    	
-		</select>
-		
-		 <label for="workgroup" class="required">Technician ID:</label><br/>
+		<label for="workgroup" class="required">Technician ID:</label><br/>
 	    <select id="tan" multiple style="display: block;">
 		  <option value="volvo" selected>rg123q</option>
 		  <option value="saab">vs098t</option>
 		  <option value="mercedes">dd567p</option>
 		  <option value="audi">vc345w</option>
 		</select>
-
-        <button type="submit" value="Submit" id="chat_btn">Chat</button>
- 		<button type="reset" value="Reset">Reset</button>
- 		<button type="reset" value="Reset">Search</button>
+		
+		<label  for="workgroup" class="required">CBR:</label>
+	    <input id="tcbr" type="text" name="tcbr" required>
+		
+		<div id="sns">
+			<label for="workgroup" class="required">BAN:</label> 
+			<input type="text" id="ban" name="ban" required>
+			
+			<label for="workgroup" class="required">Level 1:</label>
+		    <select id="l1" multiple ">	
+			</select>
+		</div>
+		
+		<div id="cf">
+			<label for="workgroup" >Purpose:</label> 
+			<textarea id="purpose" name="purpose"></textarea>
+			
+			<label for="workgroup" >Additional Details:</label> 
+			<textarea id="ad" name="ad"></textarea>
+			
+			<label for="workgroup" >State:</label> 
+			<textarea id="state" name="state"></textarea>
+			
+			<label for="workgroup" >What details do you have?</label> 
+			<textarea id="wd" name="wd"></textarea>
+			
+			<label for="workgroup" >Include all info needed by SME (Ticket #/Order #/ Wire Center/ Job ID/ Any Other Details)</label><br/> 
+			<textarea id="details" name="details"></textarea>
+			
+		</div>
+		
+		<div class="chat-buttons">
+	        <button type="submit" value="Submit" id="chat_btn">Chat</button>
+	 		<button type="reset" value="Reset">Reset</button>
+	 		<button type="reset" value="Reset">Search</button>
+ 		</div>
 	  </fieldset>
 	</form>
 	</div>
@@ -65,5 +86,15 @@
 	<div id="footer" class="welcome_screen">
 		<img style="display: block;" src="images/footer.png" alt="" />
 	</div>
+	<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="close">&times;</div>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
 </body>
 </html>

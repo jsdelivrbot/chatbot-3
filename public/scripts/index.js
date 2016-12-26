@@ -5,6 +5,26 @@ var agent_id;
 
 $(function()
 {
+	$("#cf").hide();
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+	 
 	var conceptName = $('#wgtc').find(":selected").val();
 	toggleDropDown(conceptName);
 	$("#wgtc").change(function () 
@@ -57,19 +77,22 @@ $(function()
 			    }
 			     else
 			    {
-			    	 alert("Please select a Level 1");
+			    	 $(".modal-content p").text("Please select a Level 1");
+			    	 modal.style.display = "block";
 			    	 return false;
 			    }
 			}
 			else
 			{
-				alert("Please enter a Numeric CBR");
+				$(".modal-content p").text("Please enter a Numeric CBR");
+				modal.style.display = "block";
 				return false;
 			}
 		}
 		else
 		{
-			alert("Please enter a BAN between 9-12 digits");
+			$(".modal-content p").text("Please enter a BAN between 9-12 digits");
+			modal.style.display = "block";
 			return false;
 		}
 	});
@@ -79,11 +102,15 @@ function toggleDropDown(val)
 {
 	  if (val == "lg") 
       {
+		  $("#cf").hide();
+		  $("#sns").show();
           $("#l1").html("<option value='pc'>Sync No Service</option><option value='ppc'>Package/Profile Change</option>");
       } 
       else if (val == "co") 
       {
           $("#l1").html("<option value='cf'>Cable Failure</option>");
+          $("#sns").hide();
+          $("#cf").show();
       } 
 }
 
