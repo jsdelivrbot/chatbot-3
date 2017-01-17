@@ -1,4 +1,4 @@
-var accessToken = "31a9215698df4fe686a11cfa30a84137";
+var accessToken = "da45c00e9eba42deba12ff06bcf73d4b";
 var baseUrl = "https://api.api.ai/v1/";
 var recognition;
 var agent_id;
@@ -34,7 +34,7 @@ $(function()
       
     });
 	
-	$("#input").keypress(function(event) 
+	$("#usermsg").keypress(function(event) 
 	{
 		if (event.which == 13) 
 		{
@@ -122,11 +122,11 @@ function clearFields()
 
 function send_chat_msg(event)
 {
-	var text = $("#input").val();
+	var text = $("#usermsg").val();
 	var my_msg =  agent_id + " ( " + Date() + " ) " + text;
 	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
 	setResponse(styled_my_msg);
-	$('#input').val('');
+	$('#usermsg').val('');
 	send_msg(event, text);
 }
 
