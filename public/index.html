@@ -2,6 +2,7 @@
 <head>
 	<title>Smart Chat</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<link type="text/css" rel="stylesheet" href="css/index.css" />
 	<script src="js/index.js"></script>
@@ -15,55 +16,54 @@
 	<form>
 	  <fieldset>
 	    <legend>CHAT</legend>
-	   
-	    <label for="workgroup">ACD Category</label>
-	   <select  id="wgtc" multiple style="display: block;">
-	   	  <option value="lg" selected>Light Gig</option>
-		  <option value="co">Report Cable Outage</option>
-		</select>
-		
-		<label for="workgroup" class="required">Technician ID:</label><br/>
+	    
+	    <label for="workgroup" class="required">Technician ID:</label><br/>
 	    <select id="tan" multiple style="display: block;">
 		  <option value="volvo" selected>rg123q</option>
 		  <option value="saab">vs098t</option>
 		  <option value="mercedes">dd567p</option>
-		  <option value="audi">vc345w</option>
+		  <option value="audi">dp345w</option>
+		</select>
+	   
+	    <label for="chatbot">Conversation Service Provider</label>
+	   <select  id="chtbt" multiple style="display: block;">
+		  <option value="apiai" selected>Google API.ai</option>
 		</select>
 		
-		<label  for="workgroup" class="required">CBR:</label>
-	    <input id="tcbr" type="text" name="tcbr" required>
+	    <label for="workgroup">Workgroup to Chat</label>
+	   <select  id="wgtc" multiple style="display: block;">
+	   	  <option value="wgtc1" selected>Tec Field Services</option>
+		  <option value="wgtc2">TCP IP Field Services Escalation</option>
+		  <option value="wgtc3">Voice TELCO Porting Issues</option>
+		  <option value="wgtc4">Tsc Tier1</option>
+		  <option value="wgtc5">Tec Arc</option>
+		</select>
+	
+		<label for="workgroup" class="required">Product:</label><br/>
+	    <select id="pdt" multiple style="display: block;">
+		</select>
 		
-		<div id="sns">
-			<label for="workgroup" class="required">BAN:</label> 
-			<input type="text" id="ban" name="ban" required>
-			
-			<label for="workgroup" class="required">Level 1:</label>
-		    <select id="l1" multiple ">	
-			</select>
-		</div>
+		<label for="workgroup" class="required">Transport Type:</label><br/>
+	    <select id="ttype" multiple style="display: block;">
+		</select>
 		
-		<div id="cf">
-			<label for="workgroup" >Purpose:</label> 
-			<textarea id="purpose" name="purpose"></textarea>
-			
-			<label for="workgroup" >Additional Details:</label> 
-			<textarea id="ad" name="ad"></textarea>
-			
-			<label for="workgroup" >State:</label> 
-			<textarea id="state" name="state"></textarea>
-			
-			<label for="workgroup" >What details do you have?</label> 
-			<textarea id="wd" name="wd"></textarea>
-			
-			<label for="workgroup" >Include all info needed by SME (Ticket #/Order #/ Wire Center/ Job ID/ Any Other Details)</label><br/> 
-			<textarea id="details" name="details"></textarea>
-			
-		</div>
+		<label for="workgroup" class="required">Exception:</label>
+		<select id="excp" multiple style="display: block;">	
+		</select>
 		
+		<label for="workgroup" class="required">BAN:</label> 
+		<input type="text" id="ban" name="ban" required placeholder="Nine Digit">
+		
+		<label  for="workgroup" class="required">Tech CBR:</label>
+	    <input id="tcbr" type="text" name="tcbr" required placeholder="Ten Digit">
+	    
+	    <label  for="workgroup" class="required">Customer Name:</label>
+	    <input id="custname" type="text" name="custname" required placeholder="At Least Four Characters">
+			
 		<div class="chat-buttons">
 	        <button type="submit" value="Submit" id="chat_btn">Chat</button>
-	 		<button type="reset" value="Reset">Reset</button>
-	 		<button type="reset" value="Reset">Search</button>
+	 		<button type="reset" value="Reset">Clear Fields</button>
+	 		<button type="reset" value="Reset" disabled>Search</button>
  		</div>
 	  </fieldset>
 	</form>

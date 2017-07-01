@@ -66,8 +66,15 @@ a {
 .msgln { margin:0 0 2px 0; }
 
 .msgBot{ background-color: lightblue; color: red; font-weight:bold;font-size: larger; margin-top:15px;}
+.csiMsg{ background-color: #F5F5F5; color: #808080; font-weight:bold;font-size: larger; margin-top:15px;}
 .msgMe{ background-color: lightgreen; color: blue; font-weight:bold;font-size: larger; margin-top:15px;}
 .chat-buttons{ margin-top: 10px;}
+
+#chat_btn {
+    color: #FFA500;
+    background-color: 	#0000FF;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
