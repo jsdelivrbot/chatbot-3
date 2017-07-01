@@ -1,9 +1,13 @@
 {
-  "name": "api-ai-smart-chat",
-  "version": "0.0.0",
-  "private": true,
+  "name": "Smart Chat",
+  "version": "0.2.6",
+  "description": "Mobile Conversational Artificial Intelligence",
+  "engines": {
+    "node": "6.10.2"
+  },
+  "main": "api_ai_server.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node api_ai_server.js"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -12,6 +16,18 @@
     "express": "~4.14.0",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
-  }
+    "request": "^2.81.0",
+    "serve-favicon": "~2.3.0",
+    "socket.io": "^2.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rguptain/chat.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
 }
