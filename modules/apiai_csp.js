@@ -7,7 +7,7 @@ log4js.configure({
   ]
 });
 
-var apiai_client_access_token = "d522cfe370774f75a4769b7545c05535";
+var apiai_client_access_token = "9df44c38a2844f46a8ec1c6f1f64e1df";
 var apiai_app = apiai(apiai_client_access_token);
 var logger = log4js.getLogger('conversation'); 
 

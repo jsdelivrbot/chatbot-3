@@ -13,7 +13,7 @@ exports.initialize = function(server)
 	  setInterval(function() 
 	  {
 		  io.sockets.send(JSON.stringify(csi_data));
-      },600000);
+      },6000000);
       socket.on('message', function(txt)
       {
     	  var message = JSON.parse(txt);
