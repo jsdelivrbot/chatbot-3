@@ -1,1 +1,1 @@
-web: node api_ai_server.js
+web: node app.js

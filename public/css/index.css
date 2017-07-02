@@ -59,7 +59,7 @@ a {
 .error { color: #ff0000; }
 
 .welcome { float:center; color: green; font-weight:bold;font-size: larger; display: inline-block;}
-.welcome_screen { float:left;}
+.chat_screen { float:left;}
   
 .logout { float:right; }
   
