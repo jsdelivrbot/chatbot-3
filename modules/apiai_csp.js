@@ -15,7 +15,7 @@ var text_request = function(session_id, chat_id, agent_id, msg, callback)
 {
 	var options = 
 	{
-		    sessionId: session_id
+		    sessionId: chat_id
 	};
 
 	var request = apiai_app.textRequest(msg, options);
