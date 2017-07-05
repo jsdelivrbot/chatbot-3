@@ -22,29 +22,29 @@
 		</select>
 	   
 	    <label for="chatbot">Conversation Service Provider</label>
-	   <select  id="chtbt" multiple style="display: block;">
+	   <select  id="chtbt">
 		  <option value="apiai" selected>Google API.ai</option>
 		</select>
 		
 	    <label for="workgroup">Workgroup to Chat</label>
-	   <select  id="wgtc" multiple style="display: block;">
+	   <select  id="wgtc">
 	   	  <option value="wgtc1" selected>Tec Field Services</option>
-		  <option value="wgtc2">TCP IP Field Services Escalation</option>
-		  <option value="wgtc3">Voice TELCO Porting Issues</option>
-		  <option value="wgtc4">Tsc Tier1</option>
-		  <option value="wgtc5">Tec Arc</option>
+		  <option value="wgtc2" disabled>TCP IP Field Services Escalation</option>
+		  <option value="wgtc3" disabled>Voice TELCO Porting Issues</option>
+		  <option value="wgtc4" disabled>Tsc Tier1</option>
+		  <option value="wgtc5" disabled>Tec Arc</option>
 		</select>
 	
 		<label for="workgroup" class="required">Product:</label><br/>
-	    <select id="pdt" multiple style="display: block;">
+	    <select id="pdt">
 		</select>
 		
 		<label for="workgroup" class="required">Transport Type:</label><br/>
-	    <select id="ttype" multiple style="display: block;">
+	    <select id="ttype">
 		</select>
 		
 		<label for="workgroup" class="required">Exception:</label>
-		<select id="excp" multiple style="display: block;">	
+		<select id="excp">	
 		</select>
 		
 		<label for="workgroup" class="required">BAN:</label> 
@@ -66,17 +66,19 @@
 	</div>
 	
 	<div id="chat" class="chat_screen">
-	    <div id="menu">
-	        <p class="welcome">Welcome to AT&T Smart Chat</p>
-	        <input name="done" type="submit"  id="done" value="Done" />
-	        <div style="clear:both"></div>
-	    </div>
-	     
-	    <ul id="chatbox"></ul>
-	     
-	    <form name="message" action="">
+	    <div class="welcome">
+           <div class="welcome-text">
+           	 	<p class="welcomeATT">Welcome to AT&T Smart Chat</p>
+                <p id="todaysDate"></p>
+           </div>
+             
+              <button  class="done-btn" id="done">Done</button>
+              <div style="clear:both"></div>
+          </div>
+	     <ul id="chatbox"></ul>
+	    <form name="message" class="chat_form" action="">
 	        <textarea name="usermsg" type="text" id="usermsg"></textarea>
-	        <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
+	        <button class="done-btn" id="submitmsg">Send</button>
 	    </form>
 	</div>
 	<div id="footer" class="welcome_screen">

@@ -4,7 +4,7 @@ var chtbt;
 var uuid = guid();
 var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "um123i", "ua123k");
 var tec_field_services_products = new Array("All Products OOS", "DTV", "IPTV", "VOIP", "Internet");
-var tec_field_services_transport_types = new Array("IP-CO", "IP-RT", "FTTN/FTTN-BP", "FTTP/FTTC", "FTTP/FTTC - Greater than 100 MG");
+var tec_field_services_transport_types = new Array("FTTP/FTTC", "IP-CO", "IP-RT", "FTTN/FTTN-BP",  "FTTP/FTTC - Greater than 100 MG");
 var tec_arc_products = new Array("ABF", "IP ARC");
 var other_transport_types = new Array("N/A");
 var all_product_oos_exceptions = new Array("Sync No Service", "No Sync", "Order Error", "Pair Change Tool Failure", "Port Change Tool Failure", "Network Outage", "Assignment Verification Tool Failure", "Assignment Corrections", "RTID Corrections", "No Light/Low Light", "ONT Activation Fallout", "Repair Ticket Creation", "Fiber Port Change Tool Failure (FMO)");
@@ -54,6 +54,7 @@ var abf_exceptions = new Array("Sync no Service",
 $(function()
 {
 	$("#chat").fadeOut();
+	setInterval(doDate, 1000);
 	toggleOptions();
 
 	// Get the modal
@@ -190,6 +191,22 @@ function createOptionString(k, a)
 	return text;
 }
 
+function updateListSelection(listId, txt)
+{
+	$(listId).empty().html(txt);
+	$(listId + " > option").each(function(index, element) 
+	{
+		if (index == 0)
+		{
+			$(listId + ' option').eq(index).prop('selected', true);
+		}
+		else
+		{
+			$(listId + ' option').eq(index).prop('disabled', true);
+		}
+	});
+}
+
 function toggleOptions()
 {
 	append_agent_ids();
@@ -249,8 +266,7 @@ function toggleProductDropDown(val)
           console.log("Didn't match");
           break;
     }
-	$("#pdt").empty().html(txt);
-	$('#pdt option[value=pdt0]').attr('selected','selected');
+	updateListSelection("#pdt", txt);
 }
 
 function toggleTransportTypeDropDown(product, workgroup)
@@ -284,8 +300,7 @@ function toggleTransportTypeDropDown(product, workgroup)
 		txt = createOptionString("ttype", other_transport_types);
 	}
 	
-	$("#ttype").empty().html(txt);
-	$('#ttype option[value=ttype0]').attr('selected','selected');
+	updateListSelection("#ttype", txt);
 }
 
 function toggleExceptionDropDown(product)
@@ -317,8 +332,7 @@ function toggleExceptionDropDown(product)
           console.log("Didn't match");
           break;
     }
-    $("#excp").empty().html(txt);
-	$('#excp option[value=excp0').attr('selected','selected');
+    updateListSelection("#excp", txt);
 }
 
 function clearFields()
@@ -352,11 +366,24 @@ function send_chat_msg(event)
 	
 }
 
+function doDate()
+{
+    var str = "";
+
+    var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+    var now = new Date();
+
+    str += days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " " + now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
+    document.getElementById("todaysDate").innerHTML = str;
+}
+
 function validateUserMessage(text)
 {
 	if (!text.trim()) 
 	{
-	    return "Please enter some chat message";
+	    return "We currently do not accept blank chat messages";
 	}
 	else
 	{
