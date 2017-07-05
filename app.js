@@ -8,10 +8,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require("request");
 var http = require('http');
+var fs = require('fs');
 
 var app = express();
+var conversation_logger = require("./modules/conversation_logger.js");
+var log_reader = require("./modules/log_reader.js");
 var tokenizer = require("./modules/data_mask.js");
-var session_id_generator = require("./modules/sessionid_generator.js");
 var apiai = require("./modules/apiai_csp.js");
 var csi_api = require("./modules/csi_api.js");
 
@@ -28,48 +30,81 @@ app.post('/chat', function(req, res)
 	var chat_id = req.body.chat_id;
 	var query = req.body.query;
 	var chtbt = req.body.csp;
-	
-	var tmp = query.split(" ");
-	
-	var agent_id = tmp[0];
-	
-	var session_id = session_id_generator.generate_key();
-	
-	console.log("Session Id:" + session_id + "\n");
+	var agent_id = req.body.agent_id;
 	
 	console.log("Message from Front End:" + query + "\n");
 	
-	tokenize(session_id, chat_id, query, res, chtbt, agent_id);
+	tokenize(chat_id, query, res, chtbt, agent_id);
 
 });
 
-function tokenize(session_id, chat_id, query, res, chtbt, agent_id) 
+app.post('/view', function(req, res)
+{
+	
+	var result = [];
+	// Read the file and print its contents.
+	var filename = 'logs/conversation.log';
+	function func(data) 
+	{
+		if(data != "END")
+		{
+			console.log("Getting Logs");
+			 var obj = JSON.parse(data);
+			  var log_entry = {"chat_id": obj.chat_id, "agent_id": obj.agent_id, "query": obj.query, "reply": obj.reply, "intent": obj.intent, "time": obj.time};
+			  result.push(log_entry);
+		}
+		else
+		{
+			console.log("Sending Logs");
+			res.contentType('application/json');
+			res.send( result);
+		}
+	}
+	 
+
+	var input = fs.createReadStream(filename);
+	log_reader.readLines(input, func);
+});
+
+var server = http.createServer(app).listen(app.get('port'), function()
+{
+	require('dns').lookup(require('os').hostname(), function (err, add, fam) 
+	{
+		  var host_url = "http://" + add + ":" + app.get('port');
+		  console.log("The application URL is: " + host_url);
+	})
+	  
+});
+
+var mod = require('./modules/sockets.js').initialize(server);
+
+function tokenize(chat_id, query, res, chtbt, agent_id) 
 {
 	var msg = tokenizer.mask_data(chat_id, query);
 	console.log("Tokenized String:" + msg + "\n");
-  	send_api_ai_request(session_id, chat_id, msg, res, agent_id);
+  	send_api_ai_request(chat_id, msg, res, agent_id, query);
 }
 
-function send_api_ai_request(session_id, chat_id, message, res, agent_id)
+function send_api_ai_request(chat_id, message, res, agent_id, query)
 {
-	apiai.text_request(session_id, chat_id, agent_id, message, function(reply)
+	apiai.text_request(chat_id, agent_id, message, function(reply)
 	{
-		console.log("Reply from API AI:" + reply + "\n");
-		detokenize(chat_id, reply, res);
+		var rp = JSON.parse(reply);
+		console.log("Reply from API AI:" + rp.msg + "\n");
+		detokenize(chat_id, rp.msg, res, agent_id, query, rp.intent);
 	});
 }
 
-function detokenize(chat_id, tokenized_request, res) 
+function detokenize(chat_id, tokenized_request, res, agent_id, query, intent_name) 
 {
 	var msg = tokenizer.unmask_data(chat_id, tokenized_request);
 	console.log("Dekotenized String:" + msg + "\n");
-	invoke_csi_api(chat_id, msg, res);
+	invoke_csi_api(chat_id, msg, res, agent_id, query, intent_name);
 };
 
 
-function invoke_csi_api(chat_id, msg, res)
+function invoke_csi_api(chat_id, msg, res, agent_id, query, intent_name)
 {
-
 	var m = msg.includes("(");
 
 	if (m)
@@ -93,21 +128,29 @@ function invoke_csi_api(chat_id, msg, res)
 			var ret = create_url(methodList);
 			urls.push(ret);
 		}
-		invoke_urls(urls, places, msg, res);
+		invoke_urls(urls, places, msg, res, chat_id, agent_id, query, intent_name);
 	}
 	else
 	{
-		res.send(msg);
+		log_and_send(res, chat_id, agent_id, query, msg, intent_name);
 	}
 };
 
-function invoke_urls(url_array, places, msg, res)
+function invoke_urls(url_array, places, msg, res, chat_id, agent_id, query, intent_name)
 {
 	var obj = url_array[0];
 	var result = csi_api.get_agent_name(obj.value);
 	msg = msg.replace(places[0], result);
 	msg = msg.substring(0, msg.indexOf('?')+1);
-	res.send(msg);
+	log_and_send(res, chat_id, agent_id, query, msg, intent_name);
+}
+
+var log_and_send = function(res, chat_id, agent_id, query, reply, intent_name)
+{
+	var log_entry = {"chat_id": chat_id, "agent_id": agent_id, "query": query, "reply": reply, "intent": intent_name};
+	conversation_logger.log_message(log_entry);
+	mod.stream_log(log_entry);
+	res.send(reply);
 }
 
 function create_url(message)
@@ -126,15 +169,3 @@ function create_url(message)
 	
 	return url;
 }
-
-var server = http.createServer(app).listen(app.get('port'), function()
-{
-	require('dns').lookup(require('os').hostname(), function (err, add, fam) 
-	{
-		  var host_url = "http://" + add + ":" + app.get('port');
-		  console.log("The application URL is: " + host_url);
-	})
-	  
-});
-
-require('./modules/sockets.js').initialize(server);

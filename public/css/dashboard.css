@@ -1,0 +1,138 @@
+html, body {font-size:100%; padding:0; margin:0; background:#fff; min-width:320px; height:100%; position:relative}
+img{ width: 100%;}
+#footer{
+	position: absolute;
+bottom: 0;
+width: 100%;
+}
+.outer { font:normal 14px/18px 'latomedium', arial, sans-serif;
+position:relative;
+padding:45px 0 30px 0;
+width:100%;
+background:#eee;
+margin:0 0 50px 0;
+}
+.innera {
+width:100%;
+height:350px;
+background:#eee;
+}
+.outer table caption {
+position:absolute;
+width:99.3%;
+text-align:center;
+top:0;
+left:0;
+height:30px;
+background:#697210;
+border:1px solid #fff;
+color:#fff;
+padding: 5px;
+}
+.outer thead tr {
+position:absolute;
+top:30px;
+left:0;
+width: 100%;
+}
+.outer tfoot td {
+position:absolute;
+width:99.4%;
+text-align:center;
+background:#f0c992; 
+border:1px solid #000;
+color:#000;
+bottom:0;
+left:0
+}
+.outer th {
+width:4%; 
+text-align:left;
+}
+
+.outer th {
+background:#724a10; 
+color:#fff;
+text-align: center;
+padding:5px 0;
+}
+
+.outer td {
+	font-size: 14px;
+	padding: 0 5px;
+	width:4%; 
+	text-align:left;
+}
+tr th:first-child{
+	width: 2%;
+}
+tbody { 
+    display: block; /* mandatory because scroll only works on block elements */
+}
+tbody.scrollable {
+    height: 350px;       /* Just for the demo          */
+    overflow-y: scroll;    /* Trigger vertical scroll    */
+    width: 100%;       /* Just for the demo          */ 
+}
+
+@viewport{
+  width: extend-to-zoom;
+   zoom: 1.0; 
+}
+@-ms-viewport{
+  width: extend-to-zoom; 
+   zoom: 1.0; 
+}
+code {border:0; font:normal 14px/18px 'latomedium', arial, sans-serif; letter-spacing:1px;}
+
+.adslot_1 {display:block; width: 728px; height: 90px; margin:0;}
+
+@media only screen and (min-width:320px) {
+.adslot_1 {width:300px; height:250px; margin:0 auto;}
+.width480 {display:none;}
+.width800 {display:none;}
+.width320 {display:block;}
+}
+@media only screen and (min-width:480px) {
+.adslot_1 {width:468px; height:60px; margin:0 auto;}
+.width480 {display:block;}
+.width800 {display:none;}
+.width320 {display:none;}
+}
+@media only screen and (min-width:760px) {
+.adslot_1 {width:728px; height:90px; margin:0;}
+.width480 {display:none;}
+.width800 {display:block;}
+.width320 {display:none;}
+}
+@media only screen and (max-width:480px) {
+.adslot_1 {display:none;}
+}
+
+
+@media only screen and (max-width:1150px) {
+#rightCol {width:90%; margin:0 auto; text-align:center;}
+#rightCol .boxTop {display:inline-block; vertical-align:top; margin:1%;} 
+#rightCol .box300 {vertical-align:top; margin:1%; min-height:220px;}
+}
+
+@media only screen and (max-width:480px) {
+._fancybar {position:absolute !important; margin-top:0 !important;}
+
+#info .top-banner h1 {font:normal 16px/22px 'latolight', arial, sans-serif;}
+header {position:absolute;}
+ul.main {position:absolute;}
+span.break {display:block;}
+#rightCol {width:100%; margin:0; text-align:center; background:#fff; padding:0; border:0;}
+#rightCol .boxTop {display:inline-block; vertical-align:top; margin:10px auto;} 
+#rightCol .box300 {vertical-align:top; margin:10px auto; min-height:0px;}
+}
+@media only screen and (max-width:320px) {
+#info .top-banner h1 {font:normal 13px/16px 'latolight', arial, sans-serif;}
+}
+
+@media only screen and (max-width:480px) {
+	.outer {display:none;}
+	.tableone {display:none;}
+	#info h3.smartphone {display:block;}
+	}

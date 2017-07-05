@@ -2,8 +2,7 @@ var recognition;
 var agent_id;
 var chtbt;
 var uuid = guid();
-var socket = io.connect('/');
-
+var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "um123i", "ua123k");
 var tec_field_services_products = new Array("All Products OOS", "DTV", "IPTV", "VOIP", "Internet");
 var tec_field_services_transport_types = new Array("IP-CO", "IP-RT", "FTTN/FTTN-BP", "FTTP/FTTC", "FTTP/FTTC - Greater than 100 MG");
 var tec_arc_products = new Array("ABF", "IP ARC");
@@ -51,14 +50,6 @@ var abf_exceptions = new Array("Sync no Service",
 		"RG/STB Support",
 		"Emux / EMT issues"
 );
-
-socket.on('message', function(txt)
-{
-	 var message = JSON.parse(txt);
-	 var bot_msg = "bot123 ( " + formatDate(new Date()) + " ) " + message.val;
-	 var styled_bot_msg = "<div class='csiMsg'>" + bot_msg + "</div>";
-	 setResponse(styled_bot_msg);
-});
 
 $(function()
 {
@@ -201,6 +192,7 @@ function createOptionString(k, a)
 
 function toggleOptions()
 {
+	append_agent_ids();
 	var wgtcName = $('#wgtc').find(":selected").val();
 	toggleProductDropDown(wgtcName);
 	$("#wgtc").change(function () 
@@ -225,6 +217,13 @@ function toggleOptions()
         toggleTransportTypeDropDown(val, wgtcName);
         toggleExceptionDropDown(product_text);
     });
+}
+
+var append_agent_ids = function()
+{
+	var txt = createOptionString("tan", agent_ids);
+	$("#tan").empty().html(txt);
+	$('#tan option[value=tan0]').attr('selected','selected');
 }
 
 function toggleProductDropDown(val)
@@ -428,7 +427,7 @@ function send_msg(event, text)
 
 function send(text) 
 {
-	$.post("/chat",{query: text, chat_id: uuid, csp: chtbt}, function(data)
+	$.post("/chat",{query: text, chat_id: uuid, "agent_id": agent_id, csp: chtbt}, function(data)
 	{
 		 var bot_msg = "bot123 ( " + formatDate(new Date()) + " ) " + data;
 		 var styled_bot_msg = "<div class='msgBot'>" + bot_msg + "</div>";

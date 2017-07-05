@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Smart Chat Dashboard</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/dashboard.css" />
+	<script src="js/dashboard.js"></script>
+</head>
+<body>
+	<div id="header" class="welcome_screen">
+		<img style="display: block;" src="img/header.png" alt="" />
+	</div>
+	<div class="outer">
+<div class="innera">
+    <table summary="This table lists the smart chat log.">
+      <caption>Smart Chat Log</caption>
+      <thead>
+        <tr>
+          <th scope="col">Agent Id</th> 
+          <th scope="col">Chat Id</th> 
+          <th scope="col">Time</th>
+          <th scope="col">Intent</th>  
+          <th scope="col">Request</th>
+          <th scope="col">Response</th> 
+            
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="5">DATE : 19th OCTOBER 2005</td>
+        </tr>
+      </tfoot>
+      <tbody id="tbd" class="scrollable">
+     </tbody>
+</table>
+</div>
+</div>
+
+	<div id="footer" class="welcome_screen">
+		<img style="display: block;" src="img/footer.png" alt="" />
+	</div>
+</body>
+</html>
