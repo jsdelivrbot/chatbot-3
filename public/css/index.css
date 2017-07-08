@@ -1,7 +1,7 @@
 body { width: 100%; height: 100%; margin: 0; font:12px arial; color: #222; padding:0; position: relative;}
 body[orient="portrait"]
 textarea {width: 100%; margin-bottom: 10px;} 
-select{width:100%;box-sizing:border-box; margin-bottom:10px;margin-top:5px;}
+select{width:100%;box-sizing:border-box; margin-bottom:5px;}
 label {margin-bottom: 0px; color: orange; font-weight: bold;}
 legend {background-color: orange; color: white; font-weight: bold; margin: 10px;}
 input { width:100%; margin-bottom: 10px;margin-top: 5px; box-sizing:border-box; font:12px arial;}
@@ -9,7 +9,6 @@ input { width:100%; margin-bottom: 10px;margin-top: 5px; box-sizing:border-box; 
 button{
 	background-color: rgb(235, 235, 235);
     font-weight: bold;
-    font-size: 16px;
     padding: 4px 20px;
     border-radius: 7px;
     border-width: 1.1px;
