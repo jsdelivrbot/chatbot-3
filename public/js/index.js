@@ -1,7 +1,25 @@
+var socket = io.connect('/');
+socket.on('message', function(txt)
+{
+	 var message = JSON.parse(txt);
+	 switch(message.type)
+	 {
+	 	case "progressMessage":
+	 		setStatus(message.val);
+			$('.status').addClass('success');
+	 	break;
+	 }
+	 
+});
+
+
+// var MAX_CHAR = 200;
 var recognition;
 var agent_id;
 var chtbt;
+var agent_img;
 var uuid = guid();
+var agent_imgs = new Array("img/dave_small.png", "img/ray_small.png", "img/scott_small.png", "img/todd_small.png");
 var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "um123i", "ua123k");
 var tec_field_services_products = new Array("All Products OOS", "DTV", "IPTV", "VOIP", "Internet");
 var tec_field_services_transport_types = new Array("FTTP/FTTC", "IP-CO", "IP-RT", "FTTN/FTTN-BP",  "FTTP/FTTC - Greater than 100 MG");
@@ -56,25 +74,18 @@ $(function()
 	$("#chat").fadeOut();
 	setInterval(doDate, 1000);
 	toggleOptions();
-
-	// Get the modal
-	var modal = document.getElementById('myModal');
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-	    modal.style.display = "none";
-	}
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) 
-	{
-		modal.style.display = "none";
-	}
-	
+	/*
+	 $('textarea').keypress(function(e) {
+		    var tval = $('textarea').val(),
+		        tlength = tval.length,
+		        set = MAX_CHAR,
+		        remain = parseInt(set - tlength);
+		    $('.msg-limit').text("Characters remained: " + remain);
+		    if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
+		        $('textarea').val((tval).substring(0, tlength - 1))
+		    }
+		})
+	*/
 	$("#usermsg").keypress(function(event) 
 	{
 		if (event.which == 13) 
@@ -93,8 +104,12 @@ $(function()
 		event.preventDefault();
 		$("#prechat").fadeIn();
 		$("#chat").fadeOut();
-		$('#chatbox').empty();
+		$('.chatbox').empty();
+		$('#usermsg').val('');
+		setStatus("");
+		//$('.msg-limit').text("Message Limit: " + MAX_CHAR + " characters");
 	});
+	
 	$("#chat_btn").click(function(event) 
 	{
 		var sep = " ";
@@ -108,7 +123,7 @@ $(function()
 		var excp = $( "#excp option:selected" ).text();
 		chtbt = $( "#chtbt option:selected" ).val();
 		uuid = guid();
-		
+		agent_img = agent_imgs[Math.floor(Math.random()*agent_imgs.length)];
 		var text = agent_id.trim() + sep + ban.trim() + sep + cbr + sep + product + sep + transport_type + sep + "sync_no_service";
 		
 		var tmp = customer_name.split(" ");
@@ -128,56 +143,102 @@ $(function()
 		        text = text + sep + customer_name;
 		}
 		
-		if(ban.length == 9 && $.isNumeric( ban) )
+		if(validate_ban())
 		{
-			if(cbr.length == 10 && $.isNumeric( cbr))
+			if (validate_cbr())
 			{
-				if (customer_name.length > 3 && isAlphabetic(customer_name))
-			    {
-					if (excp.length > 0)
-				    {
-						if (excp === "Sync No Service")
-						{
-							$("#prechat").fadeOut();
-							$("#chat").fadeIn();
-							send_msg(event, text);
-						}
-						else
-						{
-							$(".modal-content p").text("Please Select Sync No Service Exception Only");
-					    	 modal.style.display = "block";
-					    	 return false;
-						}
-				    }
-				     else
-				    {
-				    	 $(".modal-content p").text("Please select an Exception");
-				    	 modal.style.display = "block";
-				    	 return false;
-				    }
-			    }
-				else
+				if (validate_customer_name())
 				{
-					 $(".modal-content p").text("Please provide at least 4 character customer name");
-			    	 modal.style.display = "block";
-			    	 return false;
+					$("#prechat").fadeOut();
+					$("#chat").fadeIn();
+					send_msg(event, text);
 				}
 			}
-			else
-			{
-				$(".modal-content p").text("Please enter a 10 Digit CBR");
-				modal.style.display = "block";
-				return false;
-			}
-		}
-		else
-		{
-			$(".modal-content p").text("Please enter a 9 digit BAN");
-			modal.style.display = "block";
-			return false;
 		}
 	});
+	
+	$("#ban").focus(function () 
+	{
+		setStatus("Please enter a 9 digit BAN");
+		$('.status').addClass('error');
+	});
+	
+	$("#tcbr").focus(function () 
+	{
+		setStatus("Please enter a 10 digit CBR");
+		$('.status').addClass('error');
+	});
+	
+	$("#custname").focus(function () 
+	{
+		setStatus("Please enter at least four character name");
+		$('.status').addClass('error');
+	});
+	
+	$('#ban').blur(function()
+	{
+	    validate_ban()
+	});
+	$('#tcbr').blur(function()
+	{
+	    validate_cbr()
+	});
+	$('#custname').blur(function()
+	{
+	    validate_customer_name()
+	});
 });
+
+function validate_ban()
+{
+	var ban = $( "#ban" ).val();
+	if(ban.length == 9 && $.isNumeric( ban) )
+	{
+		$('.status').removeClass('error');
+		setStatus("");
+		return true;
+	}
+	else
+	{
+		setStatus("Please enter a 9 digit BAN");
+		$('.status').addClass('error');
+		return false;
+	}
+}
+
+function validate_cbr()
+{
+	var cbr = $( "#tcbr" ).val();
+	if(cbr.length == 10 && $.isNumeric( cbr))
+	{
+		$('.status').removeClass('error');
+		setStatus("");
+		return true;
+	}
+	else
+	{
+		setStatus("Please enter a 10 digit CBR");
+		$('.status').addClass('error');
+		return false;
+	}
+}
+
+function validate_customer_name()
+{
+	var customer_name = $( "#custname" ).val();
+	if (customer_name.length > 3 && isAlphabetic(customer_name))
+    {
+		$('.status').removeClass('error');
+		setStatus("");
+		return true;
+    }
+	else
+	{
+		setStatus("Please enter at least four characters name");
+		$('.status').addClass('error');
+    	 return false;
+	}
+}
 
 function createOptionString(k, a)
 {
@@ -348,8 +409,11 @@ function send_chat_msg(event)
 	var result = validateUserMessage(text);
 	var my_msg =  agent_id + " ( " + formatDate(new Date()) + " ) " + text;
 	var styled_my_msg = "<div class='msgMe'>" + my_msg + "</div>";
-	setResponse(styled_my_msg);
+	//setResponse(styled_my_msg);
+	setMessageResponse(my_msg, true, agent_img)
 	$('#usermsg').val('');
+	setStatus("");
+	//$('.msg-limit').text("Message Limit: " + MAX_CHAR + " characters");
 	
 	if (!result.trim())
 	{
@@ -360,8 +424,10 @@ function send_chat_msg(event)
 		event.preventDefault();
 		var bot_msg = "bot123 ( " + formatDate(new Date()) + " ) " + result;
 		var styled_bot_msg = "<div class='msgBot'>" + bot_msg + "</div>";
-		setResponse(styled_bot_msg);
+		//setResponse(styled_bot_msg);
+		setMessageResponse(bot_msg, false, "img/bot.png")
 		$('#usermsg').val('');
+		setStatus("");
 	}
 	
 }
@@ -448,6 +514,8 @@ function formatDate(date)
 
 function send_msg(event, text)
 {
+	$('#usermsg').prop('readonly', true);
+    $('#usermsg').addClass('input-disabled');
 	event.preventDefault();
 	send(text);
 }
@@ -458,7 +526,9 @@ function send(text)
 	{
 		 var bot_msg = "bot123 ( " + formatDate(new Date()) + " ) " + data;
 		 var styled_bot_msg = "<div class='msgBot'>" + bot_msg + "</div>";
-		 setResponse(styled_bot_msg);
+		// setResponse(styled_bot_msg);
+		 
+		 setMessageResponse(bot_msg, false, "img/bot.png")
     });
 }
 
@@ -467,6 +537,33 @@ function setResponse(val)
 	$('#chatbox').append($('<li>').html( val ));
 	var objDiv = document.getElementById("chatbox");
 	objDiv.scrollTop = objDiv.scrollHeight;
+}
+
+function setMessageResponse(val, isRequest, img) 
+{
+	setStatus("");
+	$('#usermsg').prop('readonly', false);
+    $('#usermsg').removeClass('input-disabled');
+	//var myTruncatedString = val.substring(0,MAX_CHAR);
+    var myTruncatedString = val;
+	if (isRequest)
+	{
+		var tech_msg = '<span class="chatmsg response">' + myTruncatedString + '</span><img src="' + img + '" alt="ATT Logo"/>';
+		$('#chatbox').append($('<li>').html(tech_msg));
+	}
+	else
+	{
+		var bot_msg = '<span><img src="' + img + '" alt="ATT Logo"/></span><span class="chatmsg">' + myTruncatedString + '</span>';
+		$('#chatbox').append($('<li>').html(bot_msg));
+	}
+	
+	var objDiv = document.getElementById("chatbox");
+	objDiv.scrollTop = objDiv.scrollHeight;
+}
+
+function setStatus(val) 
+{
+	$('.status').html(val);
 }
 
 function guid() 

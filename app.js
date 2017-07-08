@@ -87,7 +87,7 @@ function tokenize(chat_id, query, res, chtbt, agent_id)
 
 function send_api_ai_request(chat_id, message, res, agent_id, query)
 {
-	apiai.text_request(chat_id, agent_id, message, function(reply)
+	apiai.text_request(chat_id, message, function(reply)
 	{
 		var rp = JSON.parse(reply);
 		console.log("Reply from API AI:" + rp.msg + "\n");
@@ -99,20 +99,53 @@ function detokenize(chat_id, tokenized_request, res, agent_id, query, intent_nam
 {
 	var msg = tokenizer.unmask_data(chat_id, tokenized_request);
 	console.log("Dekotenized String:" + msg + "\n");
-	invoke_csi_api(chat_id, msg, res, agent_id, query, intent_name);
+	check_message_type(chat_id, msg, res, agent_id, query, intent_name);
 };
 
-
-function invoke_csi_api(chat_id, msg, res, agent_id, query, intent_name)
+var check_message_type = function(chat_id, msg, res, agent_id, query, intent_name)
 {
 	var m = msg.includes("(");
 
 	if (m)
 	{
 		var methodList=msg.substring(msg.lastIndexOf("(")+1,msg.lastIndexOf(")"));
+		
+		var n = methodList.startsWith("PROGRESS_MESG");
+		if (n)
+		{
+			var progress_message=methodList.substring(methodList.indexOf(":")+1,methodList.lastIndexOf("["));
+			mod.stream_progress_message(progress_message);
+			var str = methodList.substring(methodList.indexOf("["));
+			var result = invoke_csi_api(str);
+			var op = JSON.parse(result);
+			var event_name = invoke_urls(op.urls);
+			apiai.event_request(chat_id, event_name, function(reply)
+			{
+				var rp = JSON.parse(reply);
+				console.log("Event Reply from API AI:" + rp.msg + "\n");
+				log_and_send(res, chat_id, agent_id, query, rp.msg, rp.intent);
+			});
+		}
+		else
+		{
+			var places = msg.match(/<(.*?)>/g);
+			var result = invoke_csi_api(methodList);
+			var op = JSON.parse(result);
+			var reply = invoke_urls(op.urls);
+			msg = msg.replace(places, reply);
+			msg = msg.substring(0, msg.indexOf('?')+1);
+			log_and_send(res, chat_id, agent_id, query, msg, intent_name);
+		}
+	}
+	else
+	{
+		log_and_send(res, chat_id, agent_id, query, msg, intent_name);
+	}
+}
+function invoke_csi_api(methodList)
+{
 		var n = methodList.includes("|");
 		
-		var places = msg.match(/<(.*?)>/g);
 		var urls = [];
 		if (n)
 		{
@@ -128,28 +161,38 @@ function invoke_csi_api(chat_id, msg, res, agent_id, query, intent_name)
 			var ret = create_url(methodList);
 			urls.push(ret);
 		}
-		invoke_urls(urls, places, msg, res, chat_id, agent_id, query, intent_name);
-	}
-	else
-	{
-		log_and_send(res, chat_id, agent_id, query, msg, intent_name);
-	}
+		
+		var result = {"urls": urls};
+		return JSON.stringify(result);
+		
 };
 
-function invoke_urls(url_array, places, msg, res, chat_id, agent_id, query, intent_name)
+function invoke_urls(url_array)
 {
 	var obj = url_array[0];
-	var result = csi_api.get_agent_name(obj.value);
-	msg = msg.replace(places[0], result);
-	msg = msg.substring(0, msg.indexOf('?')+1);
-	log_and_send(res, chat_id, agent_id, query, msg, intent_name);
+	
+	switch(obj.method) 
+	{
+	    case "get_agent_name":
+	        return csi_api.get_agent_name(obj.value);
+	        break;
+	    case "validate_account_status":
+	        return csi_api.validate_account_status(obj.value);
+	        break;
+	    case "validate_serial_number":
+	        return csi_api.validate_serial_number(obj.value);
+	        break;
+	    default:
+	        var text = "I have never heard of that fruit...";
+	    	console.log(text);
+	} 
 }
 
 var log_and_send = function(res, chat_id, agent_id, query, reply, intent_name)
 {
 	var log_entry = {"chat_id": chat_id, "agent_id": agent_id, "query": query, "reply": reply, "intent": intent_name};
 	conversation_logger.log_message(log_entry);
-	mod.stream_log(log_entry);
+	mod.stream_log(JSON.stringify(log_entry));
 	res.send(reply);
 }
 

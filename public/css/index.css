@@ -1,5 +1,6 @@
 body { width: 100%; height: 100%; margin: 0; font:12px arial; color: #222; padding:0; position: relative;}
-textarea { width: 100%; margin-bottom: 10px;} 
+body[orient="portrait"]
+textarea {width: 100%; margin-bottom: 10px;} 
 select{width:100%;box-sizing:border-box; margin-bottom:10px;margin-top:5px;}
 label {margin-bottom: 0px; color: orange; font-weight: bold;}
 legend {background-color: orange; color: white; font-weight: bold; margin: 10px;}
@@ -19,7 +20,7 @@ button{
 }
 img{ width: 100%;}
 #footer{
-
+position:absolute;
 bottom: 0;
 width: 100%;
 }
@@ -36,16 +37,13 @@ input[type=submit]
 form, p, span {
     margin:0;
     padding:0; }
-form{
-	background-color: #d5e4e6;
-	margin: 10px;
-	padding: 10px;
-}
  
 .chat_form{
 	margin: 0;
 	padding:0;
 }
+
+.input-disabled{background-color:#EBEBE4;border:1px solid #ABADB3;padding:2px 1px;}
   
 a {
     color:#0000FF;
@@ -55,11 +53,11 @@ a {
 
 #prechat{ width: 26%;} 
 #chat{
-    margin:0 auto;
-    padding-bottom:25px;
     background:rgb(213, 228, 230);
-    width:504px;
-    border:1px solid #ACD8F0;}
+    width:26%;
+    border:1px solid #ACD8F0;
+    box-sizing:border-box;
+    }
   
 #chatbox {
     text-align:left;
@@ -76,15 +74,14 @@ a {
 #usermsg
 {
 	height:100px;
+	width: 100%;
 	border:1px solid #ACD8F0;
 	overflow-y:scroll;
 	margin-bottom:20px;
 }
   
 #submit { width: 60px; }
-  
-.error { color: #ff0000; }
-
+ 
 .chat_screen { float:left;}
 
 .welcome
@@ -104,32 +101,114 @@ a {
 	font-weight: bold;
 }
 
+.prechat-form
+{
+	padding: 20px;
+	border: 1px solid black;
+	height: 60%;
+	background-color: #d5e4e6;
+}
+.prechat-form h1
+{
+	text-align:center;
+}
+
+.status{
+	width: 26%;
+	height: 65px;
+	color: black;
+	background-color: #ebebeb;
+	margin-bottom: 5px;
+	clear:both;
+	font-size: 14px; 
+	font-weight: bold;
+	text-align:center;
+	padding-top: 20px;
+}
+
+.success{color: green;}
+.warning{color: darkorange;}
+.error{ color: #ff0000;}
+
+.chatbox li{
+	list-style: none;
+	clear:both;
+	font-size:14px;
+	font-weight:bold;
+}
+
+.chatbox li img {
+	width: 45px;
+	height : 45px;
+	margin-right: 10px;
+	margin-left: 10px;
+	float: left;
+	box-sizing: border-box;
+}
+.chatbox .chatmsg{
+	width : 80%;
+	height: auto;
+	border: 2px solid #b9d2d6;
+	border-radius: 7px;
+	float: left;
+	padding-left: 10px;
+	padding-top: 5px;
+	margin-bottom: 15px;
+	box-sizing: border-box;
+	position: relative;
+	background-color: #b9d2d6;
+	word-wrap: break-word;
+}
+
+.msg-limit
+{
+	font-size:14px;
+	font-weight:bold;
+}
+
+.chatbox .chatmsg:after{
+	content: '';
+	position: absolute;
+	height: 0;
+	width:0;
+	right: 100%;
+	top: 10%;
+	border: 9px solid transparent;
+	border-right-color: #b9d2d6;
+	z-index: 100;
+	
+}
+
+.chatbox .chatmsg.response{
+	border: 2px solid #f5cba7;
+	background-color:  #f5cba7;
+}
+.chatbox .chatmsg.response:after{
+	content: '';
+	position: absolute;
+	height: 0;
+	width:0;
+	left: 100%;
+	top: 10%;
+	border: 9px solid transparent;
+	border-left-color: #f5cba7;
+	z-index: 100;
+}
+
+.chat 
+{
+    display: inline-flex;
+    width: 100%;
+    padding: 5px;
+    background-color: #ebebeb;
+}
+
 .msgln { margin:0 0 2px 0; }
 
 .msgBot{ background-color: lightblue; color: red; font-weight:bold;font-size: larger; margin-top:15px;}
 .csiMsg{ background-color: #F5F5F5; color: #808080; font-weight:bold;font-size: larger; margin-top:15px;}
 .msgMe{ background-color: lightgreen; color: blue; font-weight:bold;font-size: larger; margin-top:15px;}
 .chat-buttons{  text-align: center; margin-top: 10px; margin-bottom: 10px;}
-
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 20%;
-    top: 40%;
-    width: 25%; /* Full width */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 7% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
 
 /* The Close Button */
 .close {

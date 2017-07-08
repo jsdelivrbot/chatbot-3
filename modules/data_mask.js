@@ -179,7 +179,7 @@ var unmask_data = function(id, str)
 			console.log("Query does not have Serial Number Mask");
 		  }
 		  
-		  delete hash_table[id];
+		 // delete hash_table[id];
 	}
 	  
 	return unmasked_string;

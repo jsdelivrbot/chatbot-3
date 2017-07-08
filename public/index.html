@@ -13,10 +13,11 @@
 	</div>
 	
 	<div id="prechat" class="welcome_screen">
-	<form>
-	  <fieldset>
-	    <legend>CHAT</legend>
-	    
+	<form class="prechat-form">
+		<div>
+			<h1>Smart Chat</h1>
+		</div>
+	
 	    <label for="workgroup" class="required">Technician ID:</label><br/>
 	    <select id="tan">
 		</select>
@@ -61,7 +62,6 @@
 	 		<button type="reset" value="Reset">Clear Fields</button>
 	 		<button type="reset" value="Reset" disabled>Search</button>
  		</div>
-	  </fieldset>
 	</form>
 	</div>
 	
@@ -75,12 +75,13 @@
               <button  class="done-btn" id="done">Done</button>
               <div style="clear:both"></div>
           </div>
-	     <ul id="chatbox"></ul>
+	     <ul id="chatbox" class="chatbox"></ul>
 	    <form name="message" class="chat_form" action="">
 	        <textarea name="usermsg" type="text" id="usermsg"></textarea>
 	        <button class="done-btn" id="submitmsg">Send</button>
 	    </form>
 	</div>
+	<div class="status"></div>
 	<div id="footer" class="welcome_screen">
 		<img style="display: block;" src="img/footer.png" alt="" />
 	</div>

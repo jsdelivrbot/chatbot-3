@@ -49,7 +49,35 @@ var get_agent_name = function(agent_id)
 	return text;
 };
 
+var validate_account_status = function(str)
+{
+	var x = str.endsWith("7");
+    if(x)
+    {
+    	return "sns_event_acct_bad";
+    }
+    else
+    {
+        return "sns_event_acct_good";
+    }
+};
+
+var validate_serial_number = function(str)
+{
+	var x = str.endsWith("9");
+    if(x)
+    {
+    	return "sns_event_sn_invalid";
+    }
+    else
+    {
+        return "sns_event_sn_valid";
+    }
+};
+
 module.exports = 
 {
-	get_agent_name
+	get_agent_name,
+	validate_account_status,
+	validate_serial_number
 };
