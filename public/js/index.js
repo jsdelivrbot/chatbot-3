@@ -548,7 +548,7 @@ function setMessageResponse(val, isRequest, img)
     var myTruncatedString = val;
 	if (isRequest)
 	{
-		var tech_msg = '<span class="chatmsg response">' + myTruncatedString + '</span><img src="' + img + '" alt="ATT Logo"/>';
+		var tech_msg = '<span class="chatmsg response">' + myTruncatedString + '</span><img class="tech_img" src="' + img + '" alt="ATT Logo"/>';
 		$('#chatbox').append($('<li>').html(tech_msg));
 	}
 	else

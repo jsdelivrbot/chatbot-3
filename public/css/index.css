@@ -1,4 +1,4 @@
-body { width: 100%; height: 100%; margin: 0; font:12px arial; color: #222; padding:0; position: relative;}
+body { width: 100%; min-height: 100%; margin: 0; font:12px arial; color: #222; padding:0; position: relative;}
 body[orient="portrait"]
 textarea {width: 100%; margin-bottom: 10px;} 
 select{width:100%;box-sizing:border-box; margin-bottom:5px;}
@@ -29,10 +29,7 @@ input[type=submit]
 	width:20%;
 	float:right;
 }
-#chat
-{
-	padding:25px;
-}
+
 form, p, span {
     margin:0;
     padding:0; }
@@ -56,14 +53,15 @@ a {
     width:26%;
     border:1px solid #ACD8F0;
     box-sizing:border-box;
+    padding:15px;
     }
   
 #chatbox {
     text-align:left;
-    margin-bottom:25px;
+    margin-bottom:15px;
     padding:10px;
     background:#fff;
-    height:270px;
+    height:250px;
     border:1px solid #ACD8F0;
     overflow-y:scroll; }
     
@@ -83,10 +81,6 @@ a {
  
 .chat_screen { float:left;}
 
-.welcome
-{   
-    padding: 10px;
-}
 .welcome-text{
 	float: left;
 }
@@ -114,15 +108,15 @@ a {
 
 .status{
 	width: 26%;
-	height: 65px;
+	height: 55px;
 	color: black;
 	background-color: #ebebeb;
-	margin-bottom: 5px;
 	clear:both;
 	font-size: 14px; 
 	font-weight: bold;
 	text-align:center;
 	padding-top: 20px;
+	box-sizing: border-box;
 }
 
 .success{color: green;}
@@ -132,18 +126,22 @@ a {
 .chatbox li{
 	list-style: none;
 	clear:both;
-	font-size:14px;
-	font-weight:bold;
 }
 
 .chatbox li img {
-	width: 45px;
-	height : 45px;
+	width: 40px;
+	height : 40px;
 	margin-right: 10px;
-	margin-left: 10px;
 	float: left;
 	box-sizing: border-box;
 }
+
+.tech_img
+{
+	margin-left: 10px;
+    margin-bottom: 5px;
+}
+
 .chatbox .chatmsg{
 	width : 80%;
 	height: auto;
