@@ -60,6 +60,7 @@ var create_options = function(chat_id)
 	
 	if (contexts)
 	{
+		console.log("Adding Contexts: " + JSON.stringify(contexts));
 		options["contexts"] = contexts;
 	}
 	
@@ -68,11 +69,20 @@ var create_options = function(chat_id)
 
 var add_context = function(chat_id, contexts)
 {
+	var ctx = [];
 	if (chat_id in context_list)
 	{
 		delete context_list[chat_id]; 
 	}
-	context_list[chat_id] = contexts;
+	contexts.forEach( function (context)
+	{
+	    var x = context.lifespan;
+	    if (Number(x) > 0)
+	    {
+	    	ctx.push(context);
+	    }
+	});
+	context_list[chat_id] = ctx;
 }
 
 var get_context = function(chat_id)
