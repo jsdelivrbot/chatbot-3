@@ -2,7 +2,7 @@ var hash_table = {};
 var agentid_pattern = /[a-zA-Z]{2}[0-9]{3}[a-z|A-Z|0-9]{1}/;
 var ban_pattern = /#####[0-9]{4}|[0-9]{9}/;
 var phone_pattern = /d{3}-\\d{3}-\\d{4}|[0-9]{10}/;
-var sn_pattern = /\\d{4}[nN]\\d{6}/;
+var sn_pattern = /^$|^\d{14}$/;
 var agentid_mask = "ATT_001";
 var ban_mask = "BAN_001";
 var phone_mask = "PHONE_001";
@@ -87,6 +87,17 @@ var mask_data = function(id, str)
 		console.log("Query does not have Agent Id");
 	  }
 	  
+	  if (hasSN(masked_string))
+	  {
+		  var token = masked_string.match(sn_pattern);
+		  masked_string = mask_string(masked_string, sn_pattern, sn_mask);
+		  obj[sn_mask] = token;
+	  }
+	  else
+	  {
+		console.log("Query does not have Serial Number");
+	  }
+	  
 	  if (hasBan(masked_string))
 	  {
 		  var token = masked_string.match(ban_pattern);
@@ -107,17 +118,6 @@ var mask_data = function(id, str)
 	  else
 	  {
 		console.log("Query does not have Phone");
-	  }
-	  
-	  if (hasSN(masked_string))
-	  {
-		  var token = masked_string.match(sn_pattern);
-		  masked_string = mask_string(masked_string, sn_pattern, sn_mask);
-		  obj[sn_mask] = token;
-	  }
-	  else
-	  {
-		console.log("Query does not have Serial Number");
 	  }
 	  
 	  if (Object.keys(obj).length === 0 && obj.constructor === Object)

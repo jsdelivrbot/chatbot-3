@@ -113,6 +113,8 @@ var check_message_type = function(chat_id, msg, res, agent_id, query, intent_nam
 		var n = methodList.startsWith("PROGRESS_MESG");
 		if (n)
 		{
+			var msg_to_send = msg.substr(0, msg.indexOf('('));
+			mod.stream_bot_message(msg_to_send);
 			var progress_message=methodList.substring(methodList.indexOf(":")+1,methodList.lastIndexOf("["));
 			mod.stream_progress_message(progress_message);
 			var str = methodList.substring(methodList.indexOf("["));

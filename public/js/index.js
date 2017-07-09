@@ -8,6 +8,10 @@ socket.on('message', function(txt)
 	 		setStatus(message.val);
 			$('.status').addClass('success');
 	 	break;
+	 	case "botMessage":
+	 		setMessageResponse(message.val, false, "img/bot.png")
+	 	break;
+	 	
 	 }
 	 
 });
