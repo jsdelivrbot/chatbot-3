@@ -16,7 +16,7 @@ socket.on('message', function(txt)
 	 
 });
 
-
+var modal;
 // var MAX_CHAR = 200;
 var recognition;
 var agent_id;
@@ -75,6 +75,24 @@ var abf_exceptions = new Array("Sync no Service",
 
 $(function()
 {
+	// Get the modal
+	modal = document.getElementById('myModal');
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) 
+	{
+		modal.style.display = "none";
+	}
+	
 	$("#chat").fadeOut();
 	setInterval(doDate, 1000);
 	toggleOptions();
@@ -147,20 +165,35 @@ $(function()
 		        text = text + sep + customer_name;
 		}
 		
-		if(validate_ban())
+		if(ban.length == 9 && $.isNumeric( ban))
 		{
-			if (validate_cbr())
+			if (cbr.length == 10 && $.isNumeric( cbr))
 			{
-				if (validate_customer_name())
+				if (customer_name.length > 3 && isAlphabetic(customer_name))
 				{
 					$("#prechat").fadeOut();
 					$("#chat").fadeIn();
 					send_msg(event, text);
 				}
+				else
+				{
+					validate_with_modal("Please enter at least four characters name");
+			    	return false;
+				}
+			}
+			else
+			{
+				validate_with_modal("Please enter a 10 digit CBR");
+		    	return false;
 			}
 		}
+		else
+		{
+			validate_with_modal("Please enter a 9 digit BAN");
+	    	return false;
+		}
 	});
-	
+	/*
 	$("#ban").focus(function () 
 	{
 		setStatus("Please enter a 9 digit BAN");
@@ -191,22 +224,20 @@ $(function()
 	{
 	    validate_customer_name()
 	});
+	*/
 });
-
+/*
 function validate_ban()
 {
 	var ban = $( "#ban" ).val();
 	if(ban.length == 9 && $.isNumeric( ban) )
 	{
-		$('.status').removeClass('error');
-		setStatus("");
 		return true;
 	}
 	else
 	{
-		setStatus("Please enter a 9 digit BAN");
-		$('.status').addClass('error');
-		return false;
+		validate_with_modal("Please enter a 9 digit BAN");
+    	return false;
 	}
 }
 
@@ -215,15 +246,12 @@ function validate_cbr()
 	var cbr = $( "#tcbr" ).val();
 	if(cbr.length == 10 && $.isNumeric( cbr))
 	{
-		$('.status').removeClass('error');
-		setStatus("");
 		return true;
 	}
 	else
 	{
-		setStatus("Please enter a 10 digit CBR");
-		$('.status').addClass('error');
-		return false;
+		validate_with_modal("Please enter a 10 digit CBR");
+    	return false;
 	}
 }
 
@@ -232,16 +260,37 @@ function validate_customer_name()
 	var customer_name = $( "#custname" ).val();
 	if (customer_name.length > 3 && isAlphabetic(customer_name))
     {
-		$('.status').removeClass('error');
-		setStatus("");
 		return true;
     }
 	else
 	{
-		setStatus("Please enter at least four characters name");
+		validate_with_modal("Please enter at least four characters name");
+    	return false;
+	}
+}
+
+var validate_with_status = function(flag, msg)
+{
+	if (flag)
+    {
+		$('.status').removeClass('error');
+		setStatus(msg);
+		return true;
+    }
+	else
+	{
+		setStatus(msg);
 		$('.status').addClass('error');
     	 return false;
 	}
+}
+*/
+
+var validate_with_modal = function(msg)
+{
+	 $(".modal-content p").text(msg);
+	 modal.style.display = "block";
+	 return false;
 }
 
 function createOptionString(k, a)
