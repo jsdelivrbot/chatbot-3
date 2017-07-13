@@ -24,9 +24,9 @@ var chtbt;
 var agent_img;
 var uuid = guid();
 var agent_imgs = new Array("img/dave_small.png", "img/ray_small.png", "img/scott_small.png", "img/todd_small.png");
-var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "um123i", "ua123k");
+var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "jf123i", "tc123k");
 var tec_field_services_products = new Array("All Products OOS", "DTV", "IPTV", "VOIP", "Internet");
-var tec_field_services_transport_types = new Array("FTTP/FTTC", "IP-CO", "IP-RT", "FTTN/FTTN-BP",  "FTTP/FTTC - Greater than 100 MG");
+var tec_field_services_transport_types = new Array("FTTN/FTTN-BP", "FTTP/FTTC", "FTTP/FTTC - Greater than 100 MG", "IP-CO", "IP-RT");
 var tec_arc_products = new Array("ABF", "IP ARC");
 var other_transport_types = new Array("N/A");
 var all_product_oos_exceptions = new Array("Sync No Service", "No Sync", "Order Error", "Pair Change Tool Failure", "Port Change Tool Failure", "Network Outage", "Assignment Verification Tool Failure", "Assignment Corrections", "RTID Corrections", "No Light/Low Light", "ONT Activation Fallout", "Repair Ticket Creation", "Fiber Port Change Tool Failure (FMO)");
@@ -173,6 +173,7 @@ $(function()
 				{
 					$("#prechat").fadeOut();
 					$("#chat").fadeIn();
+					setCookie("agent_id", agent_id, 365);
 					send_msg(event, text);
 				}
 				else
@@ -286,6 +287,31 @@ var validate_with_status = function(flag, msg)
 }
 */
 
+function setCookie(cname, cvalue, exdays) 
+{
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) 
+{
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 var validate_with_modal = function(msg)
 {
 	 $(".modal-content p").text(msg);
@@ -354,7 +380,18 @@ var append_agent_ids = function()
 {
 	var txt = createOptionString("tan", agent_ids);
 	$("#tan").empty().html(txt);
-	$('#tan option[value=tan0]').attr('selected','selected');
+	var username = getCookie("agent_id");
+	if (username)
+	{
+		$("#tan option").filter(function() {
+		    //may want to use $.trim in here
+		    return $(this).text() == username; 
+		}).prop('selected', true);
+	}
+	else
+	{
+		$('#tan option[value=tan0]').attr('selected','selected');
+	}
 }
 
 function toggleProductDropDown(val)

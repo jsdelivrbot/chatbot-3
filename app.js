@@ -144,6 +144,7 @@ var check_message_type = function(chat_id, msg, res, agent_id, query, intent_nam
 		log_and_send(res, chat_id, agent_id, query, msg, intent_name);
 	}
 }
+
 function invoke_csi_api(methodList)
 {
 		var n = methodList.includes("|");
@@ -192,10 +193,31 @@ function invoke_urls(url_array)
 
 var log_and_send = function(res, chat_id, agent_id, query, reply, intent_name)
 {
+	write_log(chat_id, agent_id, query, reply, intent_name);
+	
 	var log_entry = {"chat_id": chat_id, "agent_id": agent_id, "query": query, "reply": reply, "intent": intent_name};
 	conversation_logger.log_message(log_entry);
 	mod.stream_log(JSON.stringify(log_entry));
 	res.send(reply);
+}
+
+function write_log(chat_id, agent_id, query, msg, intent_name) 
+{
+	var url = "http://localhost:8000/write_log?" + "chatID=" + chat_id + "&" + "MsgSentBy=" + agent_id + "&" + "request=" + query + "&" + "response=" + msg + "&" + "intentName=" + intent_name;
+	  
+	  request(url, function (error, response, body) 
+	  {
+		    if (!error && response.statusCode == 200) 
+		    {
+		    	console.log("Successful Logging in SQLITE");
+		    	console.log(url);
+		    }
+		    else
+		    {
+		    	console.log("ERROR in Logging in SQLITE");
+		    	console.log(url);
+		    }
+	  })
 }
 
 function create_url(message)
