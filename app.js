@@ -16,8 +16,9 @@ var log_reader = require("./modules/log_reader.js");
 var tokenizer = require("./modules/data_mask.js");
 var apiai = require("./modules/apiai_csp.js");
 var csi_api = require("./modules/csi_api.js");
+var config = require('./configuration/config');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.port);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
