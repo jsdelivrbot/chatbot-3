@@ -3,7 +3,7 @@
   "version": "0.2.6",
   "description": "Mobile Conversational Artificial Intelligence",
   "engines": {
-    "node": "7.8.0"
+    "node": "8.1.4"
   },
   "main": "app.js",
   "scripts": {
