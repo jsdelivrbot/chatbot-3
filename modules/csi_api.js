@@ -36,10 +36,10 @@ var get_agent_name = function(agent_id)
 	    case "rb123h":
 	        text = "Ron";
 	        break;
-	    case "um123i" :
+	    case "jf123i" :
 	        text = "Umberto";
 	        break;
-	    case "ua123k":
+	    case "tc123k":
 	        text = "Uluka";
 	        break;
 	    default:
