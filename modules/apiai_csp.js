@@ -1,6 +1,7 @@
 var util = require('util');
 var apiai = require("apiai");
-var apiai_client_access_token = "9df44c38a2844f46a8ec1c6f1f64e1df";
+var config = require('../configuration/config');
+var apiai_client_access_token = config.api_ai_key;
 var apiai_app = apiai(apiai_client_access_token);
 var context_list = {};
 
