@@ -51,15 +51,18 @@ var get_agent_name = function(agent_id)
 
 var validate_account_status = function(str)
 {
-	var x = str.endsWith("7");
-    if(x)
-    {
-    	return "sns_event_acct_bad";
-    }
-    else
-    {
-        return "sns_event_acct_good";
-    }
+	var x = str.slice(-1);
+	switch(Number(x))
+	{
+	 	case 0:
+	 		return "sns_event_acct_bad";
+	    case 1:
+	    	return "sns_event_aots_outage";
+	    case 2:
+	    	return "sns_event_aots_fine";
+	    default:
+	    	return "sns_event_acct_good";
+	}
 };
 
 var validate_serial_number = function(str)
@@ -75,9 +78,23 @@ var validate_serial_number = function(str)
     }
 };
 
+var check_aots_outage = function(str)
+{
+	var x = str.endsWith("6");
+    if(x)
+    {
+    	return "sns_event_aots_outage";
+    }
+    else
+    {
+        return "sns_event_aots_fine";
+    }
+};
+
 module.exports = 
 {
 	get_agent_name,
 	validate_account_status,
-	validate_serial_number
+	validate_serial_number,
+	check_aots_outage
 };

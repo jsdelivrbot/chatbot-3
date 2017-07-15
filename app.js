@@ -191,6 +191,9 @@ function invoke_urls(url_array)
 	    case "validate_serial_number":
 	        return csi_api.validate_serial_number(obj.value);
 	        break;
+	    case "check_aots_outage":
+	        return csi_api.check_aots_outage(obj.value);
+	        break;
 	    default:
 	        var text = "I have never heard of that fruit...";
 	    	console.log(text);
