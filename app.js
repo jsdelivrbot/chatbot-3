@@ -39,6 +39,11 @@ app.post('/chat', function(req, res)
 
 });
 
+app.get('/key', function(req, res)
+{
+	  res.send(config.api_ai_key);
+});
+
 app.post('/view', function(req, res)
 {
 	
