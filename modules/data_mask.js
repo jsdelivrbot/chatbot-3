@@ -11,25 +11,25 @@ var sn_mask = "SN_001";
 var hasAgentMask = function(value) 
 {
 	
-	return /ATT_001/.test(value);
+	return RegExp(agentid_mask, "i").test(value);
 }
 
 var hasBanMask = function(value) 
 {
 	
-	return /BAN_001/.test(value);
+	return RegExp(ban_mask, "i").test(value);
 }
 
 var hasPhoneMask = function(value) 
 {
 	
-	return /PHONE_001/.test(value);
+	return RegExp(phone_mask, "i").test(value);
 }
 
 var hasSNMask = function(value) 
 {
 	
-	return /SN_001/.test(value);
+	return RegExp(sn_mask, "i").test(value);
 }
 
 var hasAgentId = function(value) 
@@ -57,7 +57,7 @@ var hasSN = function(value)
 var mask_string = function(str, pattern, rep)
 {
 	console.log ("Query Before token Masking: " + str);
-	var masked_string = str.replace(pattern, rep);
+	var masked_string = str.replace(RegExp(pattern, "g"), rep);
 	console.log ("Query after token Masking: " + masked_string);
 	return masked_string;
 }
@@ -65,7 +65,7 @@ var mask_string = function(str, pattern, rep)
 var unmask_string = function(str, pattern, rep)
 {
 	console.log ("Query Before token UnMasking: " + str);
-	var unmasked_string = str.replace(pattern, rep);
+	var unmasked_string = str.replace(RegExp(pattern, "g"), rep);
 	console.log ("Query after token UnMasking: " + unmasked_string);
 	return unmasked_string;
 }
