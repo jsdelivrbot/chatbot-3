@@ -28,7 +28,7 @@
   },
   "keywords": [
     "node",
-    "heroku",
+    "socket.io",
     "express"
   ],
   "license": "MIT"

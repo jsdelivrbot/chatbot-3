@@ -54,11 +54,11 @@ var validate_account_status = function(str)
 	var x = str.slice(-1);
 	switch(Number(x))
 	{
-	 	case 0:
+	 	case 2:
 	 		return "sns_event_acct_bad";
-	    case 1:
+	    case 3:
 	    	return "sns_event_aots_outage";
-	    case 2:
+	    case 4:
 	    	return "sns_event_aots_fine";
 	    default:
 	    	return "sns_event_acct_good";
