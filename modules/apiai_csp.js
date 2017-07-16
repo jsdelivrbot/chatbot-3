@@ -100,7 +100,7 @@ var get_context = function(chat_id)
 
 var process_response = function(chat_id, response, callback)
 {
-	//console.log(util.inspect(response, false, null));
+	// console.log("Complete API.ai Response: " + util.inspect(response, false, null));
 	
 	var contexts = response.result.contexts;
 	add_context(chat_id, contexts);

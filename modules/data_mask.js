@@ -2,11 +2,16 @@ var hash_table = {};
 var agentid_pattern = /[a-zA-Z]{2}[0-9]{3}[a-z|A-Z|0-9]{1}/;
 var ban_pattern = /#####[0-9]{4}|[0-9]{9}/;
 var phone_pattern = /d{3}-\\d{3}-\\d{4}|[0-9]{10}/;
-var sn_pattern = /^$|^\d{14}$/;
+var sn_pattern = /[0-9]{14}([0-9]{1})?/;
 var agentid_mask = "ATT_001";
 var ban_mask = "BAN_001";
 var phone_mask = "PHONE_001";
 var sn_mask = "SN_001";
+
+function hasNumber(myString)
+{
+	  return /\d/.test(myString);
+}
 
 var hasAgentMask = function(value) 
 {
@@ -38,8 +43,7 @@ var hasAgentId = function(value)
 	return agentid_pattern.test(value);
 }
 var hasBan = function(myString) 
-{
-	
+{	
 	return ban_pattern.test(myString);
 }
 var hasPhone = function(value) 
@@ -50,7 +54,6 @@ var hasPhone = function(value)
 
 var hasSN = function(value) 
 {
-	
 	return sn_pattern.test(value);
 }
 
