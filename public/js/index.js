@@ -23,6 +23,7 @@ var agent_id;
 var chtbt;
 var agent_img;
 var uuid = guid();
+var customer_names = new Array("John Smith", "Mel Gibson", "Michael Douglas", "Scott Taylor", "Todd Smith", "Dave Jones");
 var agent_imgs = new Array("img/dave_small.png", "img/ray_small.png", "img/scott_small.png", "img/todd_small.png");
 var agent_ids = new Array("ma123q", "jd123j", "vc123r", "dp123a", "ab123c", "ue123d", "dd123e", "vs123f", "rk123g", "rb123h", "jf123i", "tc123k");
 var tec_field_services_products = new Array("All Products OOS", "DTV", "IPTV", "VOIP", "Internet");
@@ -94,7 +95,7 @@ $(function()
 	}
 	
 	$("#chat").fadeOut();
-	setInterval(doDate, 1000);
+	//setInterval(doDate, 1000);
 	toggleOptions();
 	/*
 	 $('textarea').keypress(function(e) {
@@ -138,7 +139,8 @@ $(function()
 		var acd = $( "#wgtc option:selected" ).text();
 		agent_id = $( "#tan option:selected" ).text();
 		var ban = $( "#ban" ).val();
-		var customer_name = $( "#custname" ).val();
+		//var customer_name = $( "#custname" ).val();
+		var customer_name = $( "#cust_name option:selected" ).text();
 		var product = $( "#pdt option:selected" ).text();
 		var transport_type = $( "#ttyp option:selected" ).text();
 		var cbr = $( "#tcbr" ).val();
@@ -349,6 +351,7 @@ function updateListSelection(listId, txt)
 
 function toggleOptions()
 {
+	append_customer_names();
 	append_agent_ids();
 	var wgtcName = $('#wgtc').find(":selected").val();
 	toggleProductDropDown(wgtcName);
@@ -374,6 +377,12 @@ function toggleOptions()
         toggleTransportTypeDropDown(val, wgtcName);
         toggleExceptionDropDown(product_text);
     });
+}
+
+var append_customer_names = function()
+{
+	var txt = createOptionString("cust_name", customer_names);
+	$("#cust_name").empty().html(txt);
 }
 
 var append_agent_ids = function()
@@ -522,6 +531,11 @@ function send_chat_msg(event)
 	
 }
 
+var show_chat_id = function ()
+{
+    document.getElementById("todaysDate").innerHTML = "Chat Id: " + uuid;
+}
+
 function doDate()
 {
     var str = "";
@@ -612,6 +626,7 @@ function send_msg(event, text)
 
 function send(text) 
 {
+	show_chat_id();
 	$.post("/chat",{query: text, chat_id: uuid, "agent_id": agent_id, csp: chtbt}, function(data)
 	{
 		 var bot_msg = "bot123 ( " + formatDate(new Date()) + " ) " + data;
