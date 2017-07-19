@@ -10,7 +10,8 @@ socket.on('message', function(txt)
 	 		// alert(styled_bot_msg);
 	 	break;
 	 	case "logMessage":
-	 		add_log_message(message.val.agent_id, message.val.chat_id, message.val.query, message.val.reply, message.val.intent);
+	 		var msg = JSON.parse(message.val);
+	 		add_log_message(msg.agent_id, msg.chat_id, msg.query, msg.reply, msg.intent);
 	 	break;
 	 }
 	 

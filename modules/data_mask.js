@@ -2,16 +2,16 @@ var hash_table = {};
 var agentid_pattern = /[a-zA-Z]{2}[0-9]{3}[a-z|A-Z|0-9]{1}/;
 var ban_pattern = /#####[0-9]{4}|[0-9]{9}/;
 var phone_pattern = /d{3}-\\d{3}-\\d{4}|[0-9]{10}/;
-var sn_pattern = /[0-9]{14}([0-9]{1})?/;
+var sn_pattern = /^[a-zA-Z0-9]{12,15}$/;
+//var sn_pattern = /[0-9]{14}([0-9]{1})?/;
+// /^([a-zA-Z0-9_-]){12,15}$/
+// ^[a-zA-Z0-9]{12,15}$
+// 12-15 alphaneumeric - ^(?=.*[a-zA-Z])(?=.*\d*)([a-zA-Z]{6,10}|[a-zA-Z\d]{12,15})$
+// 12-15 alphaneumeric with special characters - /^[a-zA-Z0-9-_\!\@\#\$\%\^&\*]{12,15}+$/
 var agentid_mask = "ATT_001";
 var ban_mask = "BAN_001";
 var phone_mask = "PHONE_001";
 var sn_mask = "SN_001";
-
-function hasNumber(myString)
-{
-	  return /\d/.test(myString);
-}
 
 var hasAgentMask = function(value) 
 {

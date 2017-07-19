@@ -91,6 +91,20 @@ var check_aots_outage = function(str)
     }
 };
 
+var find_comptiable_rg_models = function()
+{
+	var aots = "AOTS" + Math.floor(100000 + Math.random() * 900000);
+	
+	return aots;
+}
+
+var generate_aots_number = function()
+{
+	var aots = "AOTS" + Math.floor(100000 + Math.random() * 900000);
+	
+	return aots;
+}
+
 module.exports = 
 {
 	get_agent_name,

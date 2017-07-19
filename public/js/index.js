@@ -566,10 +566,16 @@ function validateUserMessage(text)
 			{
 			    case 9:
 			    	return "";
+			    case 12:
+			    	return "";
+			    case 13:
+			    	return "";
 			    case 14:
 			    	return "";
+			    case 15:
+			    	return "";
 			    default:
-			        return "I typically look for 9 digits in a BAN or 14 digits in a serial number. I see this is not either. Can you please try one more time ?";
+			        return "I typically look for 9 digits in a BAN or (12-15) digits in a serial number. I see this is not either. Can you please try one more time ?";
 			}
 		}
 		else
