@@ -17,6 +17,7 @@ socket.on('message', function(txt)
 		 } 
 	 }
 });
+
 var agentid_pattern = /[a-zA-Z]{2}[0-9]{3}[a-z|A-Z|0-9]{1}/;
 var modal;
 // var MAX_CHAR = 200;
