@@ -2,20 +2,22 @@ var socket = io.connect('/');
 socket.on('message', function(txt)
 {
 	 var message = JSON.parse(txt);
-	 switch(message.type)
+	 if (message.id == uuid)
 	 {
-	 	case "progressMessage":
-	 		setStatus(message.val);
-			$('.status').addClass('success');
-	 	break;
-	 	case "botMessage":
-	 		setMessageResponse(message.val, false, "img/bot.png")
-	 	break;
-	 	
+		 switch(message.type)
+		 {
+		 	case "progressMessage":
+		 		setStatus(message.val);
+				$('.status').addClass('success');
+		 	break;
+		 	case "botMessage":
+		 		setMessageResponse(message.val, false, "img/bot.png")
+		 	break;
+		 	
+		 } 
 	 }
-	 
 });
-
+var agentid_pattern = /[a-zA-Z]{2}[0-9]{3}[a-z|A-Z|0-9]{1}/;
 var modal;
 // var MAX_CHAR = 200;
 var recognition;
@@ -137,7 +139,8 @@ $(function()
 	{
 		var sep = " ";
 		var acd = $( "#wgtc option:selected" ).text();
-		agent_id = $( "#tan option:selected" ).text();
+		agent_id = $( "#agent_id" ).val();
+	//	agent_id = $( "#tan option:selected" ).text();
 		var ban = $( "#ban" ).val();
 		//var customer_name = $( "#custname" ).val();
 		var customer_name = $( "#cust_name option:selected" ).text();
@@ -167,35 +170,48 @@ $(function()
 		        text = text + sep + customer_name;
 		}
 		
-		if(ban.length == 9 && $.isNumeric( ban))
+		if(validate_agent_id(agent_id))
 		{
-			if (cbr.length == 10 && $.isNumeric( cbr))
+			if(ban.length == 9 && $.isNumeric( ban))
 			{
-				if (customer_name.length > 3 && isAlphabetic(customer_name))
+				if (cbr.length == 10 && $.isNumeric( cbr))
 				{
-					$("#prechat").fadeOut();
-					$("#chat").fadeIn();
-					setCookie("agent_id", agent_id, 365);
-					send_msg(event, text);
+					if (customer_name.length > 3 && isAlphabetic(customer_name))
+					{
+						$("#prechat").fadeOut();
+						$("#chat").fadeIn();
+						setCookie("agent_id", agent_id, 365);
+						send_msg(event, text);
+					}
+					else
+					{
+						validate_with_modal("Please enter at least four characters name");
+				    	return false;
+					}
 				}
 				else
 				{
-					validate_with_modal("Please enter at least four characters name");
+					validate_with_modal("Please enter a 10 digit CBR");
 			    	return false;
 				}
 			}
 			else
 			{
-				validate_with_modal("Please enter a 10 digit CBR");
+				validate_with_modal("Please enter a 9 digit BAN");
 		    	return false;
 			}
 		}
 		else
 		{
-			validate_with_modal("Please enter a 9 digit BAN");
+			validate_with_modal("Please enter your proper ATT ID");
 	    	return false;
 		}
 	});
+	
+var validate_agent_id = function(aid)
+{
+	return agentid_pattern.test(aid);
+}
 	/*
 	$("#ban").focus(function () 
 	{
@@ -288,6 +304,12 @@ var validate_with_status = function(flag, msg)
 	}
 }
 */
+
+var get_chat_id = function()
+{
+	var cid = Math.floor(100000000 + Math.random() * 900000000);
+	return cid;
+}
 
 function setCookie(cname, cvalue, exdays) 
 {

@@ -52,10 +52,10 @@ a {
   
     a:hover { text-decoration:underline; }
 
-#prechat{ width: 26%;} 
+#prechat{ width: 30%;} 
 #chat{
     background:rgb(213, 228, 230);
-    width:26%;
+    width:30%;
     border:1px solid #ACD8F0;
     box-sizing:border-box;
     padding:15px;
@@ -114,7 +114,7 @@ a {
 }
 
 .status{
-	width: 26%;
+	width: 30%;
 	height: 70px;
 	color: black;
 	background-color: #ebebeb;

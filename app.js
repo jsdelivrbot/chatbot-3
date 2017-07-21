@@ -120,9 +120,9 @@ var check_message_type = function(chat_id, msg, res, agent_id, query, intent_nam
 		if (n)
 		{
 			var msg_to_send = msg.substr(0, msg.indexOf('('));
-			mod.stream_bot_message(msg_to_send);
+			mod.stream_bot_message(chat_id, msg_to_send);
 			var progress_message=methodList.substring(methodList.indexOf(":")+1,methodList.lastIndexOf("["));
-			mod.stream_progress_message(progress_message);
+			mod.stream_progress_message(chat_id, progress_message);
 			var str = methodList.substring(methodList.indexOf("["));
 			var result = invoke_csi_api(str);
 			var op = JSON.parse(result);

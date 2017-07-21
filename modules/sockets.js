@@ -51,22 +51,24 @@ exports.stream_log = function(msg)
 	  io.sockets.send(JSON.stringify(log_data));
 }
 
-exports.stream_progress_message = function(msg) 
+exports.stream_progress_message = function(chat_id, msg) 
 {
 	console.log("Progress Message: " + msg);
 	  var progress_data = 
 	  {
+	     id:chat_id,
 	     val: msg,
 	     type:'progressMessage'
 	  };
 	  io.sockets.send(JSON.stringify(progress_data));
 }
 
-exports.stream_bot_message = function(msg) 
+exports.stream_bot_message = function(chat_id, msg) 
 {
 	console.log("Bot Message: " + msg);
 	  var bot_data = 
 	  {
+		 id: chat_id,
 	     val: msg,
 	     type:'botMessage'
 	  };
