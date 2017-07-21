@@ -340,6 +340,7 @@ function getCookie(cname)
 var validate_with_modal = function(msg)
 {
 	 $(".modal-content p").text(msg);
+	 $('.modal-content p').addClass('error');
 	 modal.style.display = "block";
 	 return false;
 }
@@ -375,7 +376,7 @@ function updateListSelection(listId, txt)
 function toggleOptions()
 {
 	append_customer_names();
-	append_agent_ids();
+//	append_agent_ids();
 	var wgtcName = $('#wgtc').find(":selected").val();
 	toggleProductDropDown(wgtcName);
 	$("#wgtc").change(function () 
